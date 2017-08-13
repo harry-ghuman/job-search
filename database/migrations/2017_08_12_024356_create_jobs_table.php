@@ -15,6 +15,13 @@ class CreateJobsTable extends Migration
     {
         Schema::create('jobs', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('teacher_id')->unsigned();
+            $table->foreign('teacher_id')->references('id')->on('teachers');
+            $table->string('job_title');
+            $table->integer('credits');
+            $table->mediumText('description');
+            $table->mediumText('responsibilities');
+            $table->mediumText('requirements');
             $table->timestamps();
         });
     }
@@ -26,6 +33,9 @@ class CreateJobsTable extends Migration
      */
     public function down()
     {
+        Schema::table('jobs', function (Blueprint $table) {
+            $table->dropForeign(['teacher_id']);
+        });
         Schema::dropIfExists('jobs');
     }
 }

@@ -15,7 +15,15 @@ class CreateStudentsTable extends Migration
     {
         Schema::create('students', function (Blueprint $table) {
             $table->increments('id');
-            $table->timestamps();
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->integer('student_id')->unique();
+            $table->string('semester');
+            $table->integer('year');
+            $table->string('phone');
+            $table->string('gender');
+            $table->string('residency_status');
+            $table->string('country');
         });
     }
 
@@ -26,6 +34,9 @@ class CreateStudentsTable extends Migration
      */
     public function down()
     {
+        Schema::table('students', function (Blueprint $table) {
+            $table->dropForeign(['user_id']);
+        });
         Schema::dropIfExists('students');
     }
 }
