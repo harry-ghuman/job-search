@@ -1,0 +1,44 @@
+#header{
+  background: rgba(0, 0, 0, 0.8);
+  position: absolute;
+  width: 100%;
+  padding: 3px 0;
+  .navbar{
+    margin-bottom: 0px;
+    .logo{
+      display: inline;
+      a .heading{
+        display: inline-block;
+        font-family: Source Code Pro;
+        color: white;
+        font-size: 20px;
+        text-transform: uppercase;
+        margin-left: 5px;
+        font-weight: 600;
+      }
+    }
+  }
+  .navbar-default{
+    background-color: transparent;
+    border-color: transparent;
+    .navbar-nav>.open>a{
+      background-color: dimgray;
+    }
+  }
+  .nav li{
+    a{
+      font-family: 'Source Code Pro', monospace;
+      color: white;
+      font-size: 16px;
+    }
+    a:hover{
+      background-color: dimgray;
+    }
+  }
+  .dropdown-menu{
+    background-color: black;
+    >li>a:hover{
+      background-color: dimgray;
+    }
+  }
+}

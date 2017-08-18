@@ -1,6 +1,6 @@
 @extends('layouts.master_module')
 @section('page.title')
-    Homepage
+    Dashboard
 @endsection
 @section('page.body')
     @include('partials.module_navbar')
@@ -12,7 +12,7 @@
                     <div class="panel-heading">Dashboard</div>
 
                     <div class="panel-body">
-                        Homepage
+                        You are logged in!
                     </div>
                 </div>
             </div>

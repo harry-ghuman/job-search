@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Teacher;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\View;
 
 class TeacherController extends Controller
 {
@@ -14,7 +15,9 @@ class TeacherController extends Controller
      */
     public function index()
     {
-        //
+        $teachers= Teacher::all()->sortBy('id');
+
+        return View::make('teacher.index')->with('teachers', $teachers);
     }
 
     /**
@@ -46,7 +49,9 @@ class TeacherController extends Controller
      */
     public function show(Teacher $teacher)
     {
-        //
+        $teacher = Teacher::findOrFail($teacher)->first();
+
+        return View::make('teacher.show')->with('teacher', $teacher);
     }
 
     /**
