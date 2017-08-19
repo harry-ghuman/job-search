@@ -1,0 +1,36 @@
+#footer{
+  background-color: #3A3839;
+  padding: 20px 0;
+  .dropdown-menu {
+    background-color: black;
+    >li>a:hover {
+      background-color: dimgray;
+    }
+  }
+  .footer-logo{
+    height: 165px;
+    vertical-align: top;
+  }
+  .quick-links{
+    display: inline-block;
+    text-align: center;
+    margin-left: 50px;
+  }
+  .quick-links {
+    .title {
+      color: white;
+      font-size: 20px;
+      font-weight: bold;
+    }
+    ul {
+      padding: 0px;
+      li{
+        list-style: none;
+        a{
+          color: white;
+          font-family: 'Catamaran';
+        }
+      }
+    }
+  }
+}

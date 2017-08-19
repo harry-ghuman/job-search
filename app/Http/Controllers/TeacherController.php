@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateTeacherRequest;
 use App\Teacher;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Input;
 
 class TeacherController extends Controller
 {
@@ -15,30 +18,9 @@ class TeacherController extends Controller
      */
     public function index()
     {
-        $teachers= Teacher::all()->sortBy('id');
+        $teachers = Teacher::all()->sortBy('id');
 
         return View::make('teacher.index')->with('teachers', $teachers);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
     }
 
     /**
@@ -62,7 +44,9 @@ class TeacherController extends Controller
      */
     public function edit(Teacher $teacher)
     {
-        //
+        $teacher = Teacher::findOrFail($teacher)->first();
+
+        return View::make('teacher.edit')->with('teacher', $teacher);
     }
 
     /**
@@ -72,9 +56,21 @@ class TeacherController extends Controller
      * @param  \App\Teacher  $teacher
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Teacher $teacher)
+    public function update(UpdateTeacherRequest $request, Teacher $teacher)
     {
-        //
+        $teacher_name                   = User::find($teacher->user_id);
+        $teacher_name->name             = Input::get('name');
+        $teacher_name->save();
+
+        $teacher                        = Teacher::find($teacher)->first();
+        $teacher->job_title             = Input::get('job_title');
+        $teacher->special_designation   = Input::get('special_designation');
+        $teacher->department            = Input::get('department');
+        $teacher->phone                 = Input::get('phone');
+        $teacher->office_address        = Input::get('office_address');
+        $teacher->save();
+
+        return redirect('/teacher');
     }
 
     /**
@@ -85,6 +81,9 @@ class TeacherController extends Controller
      */
     public function destroy(Teacher $teacher)
     {
-        //
+        Teacher::find($teacher)->first()->delete();
+        User::find($teacher->user_id)->delete();
+
+        return redirect('/teacher');
     }
 }

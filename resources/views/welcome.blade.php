@@ -3,7 +3,7 @@
     Homepage
 @endsection
 @section('page.body')
-    @include('partials.module_navbar')
+    @include('partials.module_header')
     <div class="banner banner_home"></div>
     <div class="container">
         <div class="row">

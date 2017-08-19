@@ -19,7 +19,7 @@ Auth::routes();
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/dashboard', 'HomeController@index')->name('dashboard');
-    Route::resource('teacher', 'TeacherController');
-    Route::resource('student', 'StudentController');
+    Route::resource('teacher', 'TeacherController',['except' => ['create','store']]);
+    Route::resource('student', 'StudentController',['except' => ['create','store']]);
     Route::resource('job', 'JobController');
 });

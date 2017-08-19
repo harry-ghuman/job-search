@@ -11,6 +11,11 @@
     <script src="{{ asset('js/app.js') }}"></script>
 </head>
 <body>
-    @yield('page.body')
+    @include('partials.module_header')
+    <div class="banner {{ (isset($homepage))? 'banner_home':'banner_interior' }}"></div>
+    <div id="home">
+        @yield('page.body')
+    </div>
+    @include('partials.module_footer')
 </body>
 </html>

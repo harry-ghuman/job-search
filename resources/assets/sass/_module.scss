@@ -4,8 +4,32 @@
   background-position: 50% 60%;
 }
 .banner_home{
-  background-image: url(/img/module_home_banner.jpg);
+  background-image: url(/img/module/home_banner.jpg);
 }
 .banner_interior{
-  background-image: url(/img/module_interior_banner.jpg);
+  background-image: url(/img/module/interior_banner.jpg);
+}
+#home{
+  background-color: #2A2A2A;
+  color: white;
+  .title{
+    background-image: url(/img/module/carbonfibre-texture.jpg);
+    background-repeat: repeat;
+    border-top: 2px solid gray;
+    border-bottom: 2px solid gray;
+    font-size: 42px;
+    font-family: 'Catamaran';
+    font-weight: bolder;
+    padding: 10px 0;
+    text-align: center;
+    text-shadow: 15px 15px 40px black;
+    text-transform: uppercase;
+  }
+  .page-content{
+    padding: 20px 0;
+    border-bottom: 2px solid gray;
+    a{
+      color: white;
+    }
+  }
 }
