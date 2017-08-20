@@ -13,7 +13,7 @@ class CreateJobRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,11 @@ class CreateJobRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'job_title'         => 'required|max:50',
+            'description'       => 'required|max:100',
+            'credits'           => 'required|digits:1|in:3,6,9',
+            'responsibilities'  => 'nullable|max:2000',
+            'requirements'      => 'nullable|max:2000',
         ];
     }
 }

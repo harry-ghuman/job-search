@@ -2,8 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateJobRequest;
+use App\Http\Requests\UpdateJobRequest;
 use App\Job;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Input;
 
 class JobController extends Controller
 {
@@ -14,7 +20,9 @@ class JobController extends Controller
      */
     public function index()
     {
-        //
+        $jobs = Job::all()->sortBy('id');
+
+        return View::make('job.index')->with('jobs', $jobs);
     }
 
     /**
@@ -24,7 +32,7 @@ class JobController extends Controller
      */
     public function create()
     {
-        //
+        return view('job.create');
     }
 
     /**
@@ -33,9 +41,11 @@ class JobController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateJobRequest $request)
     {
-        //
+        Job::create(request(['teacher_id', 'job_title','description','credits','responsibilities','requirements']));
+
+        return redirect('/job');
     }
 
     /**
@@ -46,7 +56,9 @@ class JobController extends Controller
      */
     public function show(Job $job)
     {
-        //
+        $job = Job::findOrFail($job->id);
+
+        return View::make('job.show')->with('job', $job);
     }
 
     /**
@@ -57,7 +69,9 @@ class JobController extends Controller
      */
     public function edit(Job $job)
     {
-        //
+        $job = Job::findOrFail($job)->first();
+
+        return View::make('job.edit')->with('job', $job);
     }
 
     /**
@@ -67,9 +81,17 @@ class JobController extends Controller
      * @param  \App\Job  $job
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Job $job)
+    public function update(UpdateJobRequest $request, Job $job)
     {
-        //
+        $job                    = Job::find($job)->first();
+        $job->job_title         = Input::get('job_title');
+        $job->description       = Input::get('description');
+        $job->credits           = Input::get('credits');
+        $job->responsibilities  = Input::get('responsibilities');
+        $job->requirements      = Input::get('requirements');
+        $job->save();
+
+        return redirect('/job');
     }
 
     /**
@@ -80,6 +102,8 @@ class JobController extends Controller
      */
     public function destroy(Job $job)
     {
-        //
+        Job::find($job->id)->delete();
+
+        return redirect('/job');
     }
 }

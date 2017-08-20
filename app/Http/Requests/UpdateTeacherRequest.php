@@ -26,11 +26,11 @@ class UpdateTeacherRequest extends FormRequest
         return [
             'name'                  => 'required|max:100',
             'job_title'             => 'required|max:100',
-            'special_designation'   => 'max:100',
+            'special_designation'   => 'nullable|max:100',
             'department'            => 'required|max:100',
-            'phone'                 => 'digits:10',
+            'phone'                 => 'nullable|digits:10',
             'email'                 => 'required|email',
-            'office_address'        => 'max:200',
+            'office_address'        => 'nullable|max:200',
         ];
     }
 }

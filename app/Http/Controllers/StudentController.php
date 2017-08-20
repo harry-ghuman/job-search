@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateStudentRequest;
 use App\Student;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Input;
 
 class StudentController extends Controller
 {
@@ -14,28 +18,9 @@ class StudentController extends Controller
      */
     public function index()
     {
-        //
-    }
+        $students = Student::all()->sortBy('id');
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+        return View::make('student.index')->with('students', $students);
     }
 
     /**
@@ -46,7 +31,9 @@ class StudentController extends Controller
      */
     public function show(Student $student)
     {
-        //
+        $student = Student::findOrFail($student->id);
+
+        return View::make('student.show')->with('student', $student);
     }
 
     /**
@@ -57,7 +44,9 @@ class StudentController extends Controller
      */
     public function edit(Student $student)
     {
-        //
+        $student = Student::findOrFail($student)->first();
+
+        return View::make('student.edit')->with('student', $student);
     }
 
     /**
@@ -67,9 +56,23 @@ class StudentController extends Controller
      * @param  \App\Student  $student
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Student $student)
+    public function update(UpdateStudentRequest $request, Student $student)
     {
-        //
+        $student_name               = User::find($student->user_id);
+        $student_name->name         = Input::get('name');
+        $student_name->save();
+
+        $student                    = Student::find($student)->first();
+        $student->student_id        = Input::get('student_id');
+        $student->semester          = Input::get('semester');
+        $student->year              = Input::get('year');
+        $student->phone             = Input::get('phone');
+        $student->residency_status  = Input::get('residency_status');
+        $student->country           = Input::get('country');
+        $student->gender            = Input::get('gender');
+        $student->save();
+
+        return redirect('/student');
     }
 
     /**
@@ -80,6 +83,9 @@ class StudentController extends Controller
      */
     public function destroy(Student $student)
     {
-        //
+        Student::find($student)->first()->delete();
+        User::find($student->user_id)->delete();
+
+        return redirect('/student');
     }
 }

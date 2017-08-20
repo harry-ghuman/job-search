@@ -31,7 +31,7 @@ class TeacherController extends Controller
      */
     public function show(Teacher $teacher)
     {
-        $teacher = Teacher::findOrFail($teacher)->first();
+        $teacher = Teacher::findOrFail($teacher->id);
 
         return View::make('teacher.show')->with('teacher', $teacher);
     }

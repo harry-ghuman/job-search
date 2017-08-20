@@ -31,7 +31,7 @@
                                 @foreach ($teachers as $teacher)
                                     <tr>
                                         <td><?php echo $i; ?></td>
-                                        <td title="Click to view more"><a href="{{ URL::to('teacher/' . $teacher->id.'/#title') }}">{{ ucwords($teacher->teacherInfo->name) }}</a></td>
+                                        <td title="Click to view more information"><a href="{{ URL::to('teacher/' . $teacher->id.'/#title') }}">{{ ucwords($teacher->teacherInfo->name) }}</a></td>
                                         <td>{{ ucwords($teacher->job_title) }}</td>
                                         <td>{{ ucwords($teacher->department) }}</td>
                                         <td>
