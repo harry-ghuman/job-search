@@ -33,7 +33,12 @@ class StudentController extends Controller
     {
         $student = Student::findOrFail($student->id);
 
-        return View::make('student.show')->with('student', $student);
+        $student_education = $student->education;
+        $student_work_experience = $student->workExperience;
+        $student_skills = $student->skills;
+
+        return view('student.show', compact('student','student_education','student_work_experience', 'student_skills'));
+//        return View::make('student.show')->with('student', $student, 'student_education', $student_education);
     }
 
     /**
