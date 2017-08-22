@@ -1,8 +1,8 @@
 <li><a href="{!! route('dashboard') !!}">Home</a></li>
 @role('admin')
-    <li><a href="{{ route('teacher.index') }}">Teacher</a></li>
-    <li><a href="{{ route('student.index') }}">Student</a></li>
-    <li><a href="{{ route('job.index') }}">Job</a></li>
+    <li><a href="{{ route('teacher.index') }}">Teachers</a></li>
+    <li><a href="{{ route('student.index') }}">Students</a></li>
+    <li><a href="{{ route('job.index') }}">Jobs</a></li>
 @endrole
 @if (Auth::guest())
     <li><a href="{{ route('login') }}">Login</a></li>

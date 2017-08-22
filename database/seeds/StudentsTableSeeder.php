@@ -2,6 +2,9 @@
 
 use Illuminate\Database\Seeder;
 use App\Student;
+use App\StudentEducation;
+use App\StudentWorkExperience;
+use App\StudentSkill;
 
 class StudentsTableSeeder extends Seeder
 {
@@ -34,5 +37,26 @@ class StudentsTableSeeder extends Seeder
             ];
             Student::create($student);
         }
+
+        StudentEducation::create([
+            'user_id'       =>'4',
+            'program'       =>'B.Tech',
+            'university'    =>'GNDU',
+            'gpa'           =>'3',
+            'year'          =>'2015',
+            'country'       =>'india',
+        ]);
+        StudentWorkExperience::create([
+            'user_id'       =>'4',
+            'job_title'     =>'Web developer',
+            'company'       =>'NYNDesigns',
+            'duties'        =>'Working on requests',
+            'start_date'    =>'2017-08-20 17:04:13',
+            'end_date'      =>'2017-08-20 17:04:13',
+        ]);
+        StudentSkill::create([
+            'user_id'       =>'4',
+            'skill_name'    =>'PHP',
+        ]);
     }
 }

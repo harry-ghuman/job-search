@@ -60,28 +60,32 @@
                         <span class="badge">2</span>&nbsp;
                         <label><h3><strong>Education</strong></h3></label>
                     </div>
-                    <table class="table table-condensed table-bordered table-hover">
-                        <thead>
-                            <tr>
-                                <th>Program</th>
-                                <th>University</th>
-                                <th>GPA</th>
-                                <th>Year</th>
-                                <th>Country</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($student_education as $education)
+                    @if (!count($student_education))
+                        No education added!
+                    @else
+                        <table class="table table-condensed table-bordered table-hover">
+                            <thead>
                                 <tr>
-                                    <td>{{ ucwords($education->program) }}</td>
-                                    <td>{{ ucwords($education->university) }}</td>
-                                    <td>{{ $education->gpa }}</td>
-                                    <td>{{ $education->year }}</td>
-                                    <td>{{ ucfirst($education->country) }}</td>
+                                    <th>Program</th>
+                                    <th>University</th>
+                                    <th>GPA</th>
+                                    <th>Year</th>
+                                    <th>Country</th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @foreach ($student_education as $education)
+                                    <tr>
+                                        <td>{{ ucwords($education->program) }}</td>
+                                        <td>{{ ucwords($education->university) }}</td>
+                                        <td>{{ $education->gpa }}</td>
+                                        <td>{{ $education->year }}</td>
+                                        <td>{{ ucfirst($education->country) }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    @endif
                     <div>
                         <span class="badge">3</span>&nbsp;
                         <label><h3><strong>Work experience</strong></h3></label>
@@ -116,7 +120,7 @@
                     </div>
                     <div>
                         @forelse ($student_skills as $skill)
-                            <span class="label label-default">{{ strtoupper($skill->skills) }}</span>
+                            <span class="label label-default">{{ strtoupper($skill->skill_name) }}</span>
                             @empty
                                 No skill added!
                         @endforelse
