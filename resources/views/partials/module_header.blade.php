@@ -4,7 +4,12 @@
             <div class="logo">
                 <a href="{!! route('dashboard') !!}">
                     <img class="panel-logo" src="{{ asset('img/logo.png') }}" alt="image">
-                    <div class="heading">Admin Portal</div>
+                    <div class="heading">
+                        @role('admin')Admin @endrole
+                        @role('teacher')Teacher @endrole
+                        @role('student')Student @endrole
+                        Portal
+                    </div>
                 </a>
             </div>
             <ul class="nav navbar-nav navbar-right nav-panel">

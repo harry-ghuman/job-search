@@ -127,7 +127,9 @@
                     </div>
                     <br>
                     <div class="text-right ">
-                        <a href="{{ URL::to('student/' . $student->id.'/edit#title') }}" class="btn btn-sm btn-primary">Edit profile</a>
+                        @permission('edit-student')
+                            <a href="{{ URL::to('student/' . $student->id.'/edit#title') }}" class="btn btn-sm btn-primary">Edit profile</a>
+                        @endpermission
                         <a href="{{ url()->previous() }}" class="btn btn-sm btn-primary">Back</a>
                     </div>
                 </div>

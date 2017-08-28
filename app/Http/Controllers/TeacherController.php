@@ -18,6 +18,8 @@ class TeacherController extends Controller
      */
     public function index()
     {
+        $this->authorize('index', Teacher::class);
+
         $teachers = Teacher::all()->sortBy('id');
 
         return View::make('teacher.index')->with('teachers', $teachers);
@@ -33,6 +35,8 @@ class TeacherController extends Controller
     {
         $teacher = Teacher::findOrFail($teacher->id);
 
+        $this->authorize('show', $teacher);
+
         return View::make('teacher.show')->with('teacher', $teacher);
     }
 
@@ -46,6 +50,8 @@ class TeacherController extends Controller
     {
         $teacher = Teacher::findOrFail($teacher)->first();
 
+        $this->authorize('edit', $teacher);
+
         return View::make('teacher.edit')->with('teacher', $teacher);
     }
 
@@ -58,6 +64,8 @@ class TeacherController extends Controller
      */
     public function update(UpdateTeacherRequest $request, Teacher $teacher)
     {
+        $this->authorize('update', $teacher);
+
         $teacher_name                   = User::find($teacher->user_id);
         $teacher_name->name             = Input::get('name');
         $teacher_name->save();
@@ -81,6 +89,8 @@ class TeacherController extends Controller
      */
     public function destroy(Teacher $teacher)
     {
+        $this->authorize('destroy', $teacher);
+
         Teacher::find($teacher)->first()->delete();
         User::find($teacher->user_id)->delete();
 

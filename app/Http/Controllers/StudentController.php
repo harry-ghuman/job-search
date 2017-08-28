@@ -22,6 +22,8 @@ class StudentController extends Controller
      */
     public function index()
     {
+        $this->authorize('index', Student::class);
+
         $students = Student::all()->sortBy('id');
 
         return View::make('student.index')->with('students', $students);
@@ -36,6 +38,9 @@ class StudentController extends Controller
     public function show(Student $student)
     {
         $student = Student::findOrFail($student->id);
+
+        $this->authorize('show', $student);
+
         $student_education = $student->education;
         $student_work_experience = $student->workExperience;
         $student_skills = $student->skills;
@@ -52,12 +57,16 @@ class StudentController extends Controller
     public function edit(Student $student)
     {
         $student = Student::findOrFail($student)->first();
+        $user    = User::find($student->user_id);
+
+
+        $this->authorize('edit', [$student, $user]);
+
         $student_education = $student->education;
         $student_work_experience = $student->workExperience;
         $student_skills = $student->skills;
 
         return view('student.edit', compact('student','student_education','student_work_experience', 'student_skills'));
-//        return View::make('student.edit')->with('student', $student);
     }
 
     /**
@@ -71,6 +80,9 @@ class StudentController extends Controller
     public function update(UpdateStudentRequest $request, Student $student)
     {
         $student_name               = User::find($student->user_id);
+
+        $this->authorize('update', [$student, $student_name]);
+
         $student_name->name         = Input::get('name');
         $student_name->save();
 
@@ -135,6 +147,8 @@ class StudentController extends Controller
      */
     public function destroy(Student $student)
     {
+        $this->authorize('destroy', Student::class);
+
         StudentEducation::where('user_id','=', $student->user_id)->delete();
         StudentWorkExperience::where('user_id','=', $student->user_id)->delete();
         StudentSkill::where('user_id','=', $student->user_id)->delete();

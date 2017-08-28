@@ -5,7 +5,11 @@
 @section('page.body')
     <div class="title">
         <div class="container">
-            Welcome to Admin Portal
+            Welcome to
+            @role('admin')Admin @endrole
+            @role('teacher')Teacher @endrole
+            @role('student')Student @endrole
+            Portal
         </div>
     </div>
 @endsection

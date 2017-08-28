@@ -37,7 +37,9 @@
                         </tbody>
                     </table>
                     <div class="text-right ">
-                        <a href="{{ URL::to('job/' . $job->id.'/edit#title') }}" class="btn btn-sm btn-primary">Edit Job</a>
+                        @role(['admin', 'teacher'])
+                            <a href="{{ URL::to('job/' . $job->id.'/edit#title') }}" class="btn btn-sm btn-primary">Edit Job</a>
+                        @endrole
                         <a href="{{ url()->previous() }}" class="btn btn-sm btn-primary">Back</a>
                     </div>
                 </div>

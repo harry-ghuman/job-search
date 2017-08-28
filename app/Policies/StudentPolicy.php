@@ -10,50 +10,53 @@ class StudentPolicy
 {
     use HandlesAuthorization;
 
-    /**
-     * Determine whether the user can view the student.
-     *
-     * @param  \App\User  $user
-     * @param  \App\Student  $student
-     * @return mixed
-     */
-    public function view(User $user, Student $student)
+    public function before(User $user, $ability)
     {
-        //
+        if ($user->hasRole('admin')) {
+            return true;
+        }
+    }
+
+    public function index(User $user)
+    {
+        return $user->can('index-student');
+    }
+
+    public function show(User $user, Student $student)
+    {
+        return $user->can('show-student') &&
+            ($user->hasRole('student'))? $user->id === $student->user_id : true;
+    }
+
+    public function edit(User $user, Student $student)
+    {
+        return $user->can('edit-student') &&
+            $user->id === $student->user_id;
     }
 
     /**
-     * Determine whether the user can create students.
+     * Determine whether the user can update the teacher.
      *
      * @param  \App\User  $user
-     * @return mixed
-     */
-    public function create(User $user)
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can update the student.
-     *
-     * @param  \App\User  $user
-     * @param  \App\Student  $student
+     * @param  \App\Teacher  $teacher
      * @return mixed
      */
     public function update(User $user, Student $student)
     {
-        //
+
+        return $user->can('update-student') &&
+            $user->id === $student->user_id;
     }
 
     /**
-     * Determine whether the user can delete the student.
+     * Determine whether the user can delete the teacher.
      *
      * @param  \App\User  $user
-     * @param  \App\Student  $student
+     * @param  \App\Teacher  $teacher
      * @return mixed
      */
-    public function delete(User $user, Student $student)
+    public function destroy(User $user)
     {
-        //
+        return $user->can('destroy-student');
     }
 }
