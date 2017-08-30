@@ -6,6 +6,7 @@ use App\Http\Requests\CreateJobRequest;
 use App\Http\Requests\UpdateJobRequest;
 use App\Job;
 use App\User;
+use App\Teacher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
@@ -20,6 +21,8 @@ class JobController extends Controller
      */
     public function index()
     {
+        $this->authorize('index', Job::class);
+
         $jobs = Job::all()->sortBy('id');
 
         return View::make('job.index')->with('jobs', $jobs);
@@ -32,6 +35,8 @@ class JobController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Job::class);
+
         return view('job.create');
     }
 
@@ -43,9 +48,17 @@ class JobController extends Controller
      */
     public function store(CreateJobRequest $request)
     {
+        $this->authorize('store', Job::class);
+
         Job::create(request(['teacher_id', 'job_title','description','credits','responsibilities','requirements']));
 
-        return redirect('/job');
+        if(Auth::user()->hasRole('teacher')){
+            $teacher_id = Teacher::where('user_id', Auth::user()->id)->value('id');
+            return redirect(route('job.viewPostedJobs', $teacher_id));
+        }
+        else{
+            return redirect('/job');
+        }
     }
 
     /**
@@ -57,6 +70,8 @@ class JobController extends Controller
     public function show(Job $job)
     {
         $job = Job::findOrFail($job->id);
+
+        $this->authorize('show', $job);
 
         return View::make('job.show')->with('job', $job);
     }
@@ -71,6 +86,8 @@ class JobController extends Controller
     {
         $job = Job::findOrFail($job)->first();
 
+        $this->authorize('edit', $job);
+
         return View::make('job.edit')->with('job', $job);
     }
 
@@ -84,6 +101,9 @@ class JobController extends Controller
     public function update(UpdateJobRequest $request, Job $job)
     {
         $job                    = Job::find($job)->first();
+
+        $this->authorize('update', $job);
+
         $job->job_title         = Input::get('job_title');
         $job->description       = Input::get('description');
         $job->credits           = Input::get('credits');
@@ -91,7 +111,15 @@ class JobController extends Controller
         $job->requirements      = Input::get('requirements');
         $job->save();
 
-        return redirect('/job');
+
+
+        if(Auth::user()->hasRole('teacher')){
+            $teacher_id = Teacher::where('user_id', Auth::user()->id)->value('id');
+            return redirect(route('job.viewPostedJobs', $teacher_id));
+        }
+        else{
+            return redirect('/job');
+        }
     }
 
     /**
@@ -102,8 +130,25 @@ class JobController extends Controller
      */
     public function destroy(Job $job)
     {
+        $this->authorize('destroy', $job);
+
         Job::find($job->id)->delete();
 
-        return redirect('/job');
+        if(Auth::user()->hasRole('teacher')){
+            $teacher_id = Teacher::where('user_id', Auth::user()->id)->value('id');
+            return redirect(route('job.viewPostedJobs', $teacher_id));
+        }
+        else{
+            return redirect('/job');
+        }
+    }
+
+    public function jobsPostedByTeacher($id)
+    {
+        $this->authorize('index', Job::class);
+
+        $jobs = Job::where('teacher_id', $id)->get();
+
+        return View::make('job.index')->with('jobs', $jobs);
     }
 }

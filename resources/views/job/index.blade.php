@@ -15,7 +15,7 @@
                     <?php if(!count($jobs)){ ?>
                     <div class="alert alert-info text-center h4">
                         No job has been posted yet!
-                        @role(['admin', 'teacher'])
+                        @role('teacher')
                             <br>
                             <br>
                             <div class="text-center">
@@ -25,7 +25,7 @@
                     </div>
                     <?php }
                     else { ?>
-                        @role(['admin', 'teacher'])
+                        @role('teacher')
                             <div class="text-right">
                                 <a href="{{ URL::to('job/create#title') }}" class="btn btn-sm btn-primary">Create Job</a>
                             </div>
@@ -35,11 +35,11 @@
                             <th>#</th>
                             <th>Job title</th>
                             <th>Credits</th>
+                            @role(['admin', 'student'])
+                                <th>Posted By</th>
+                            @endrole
                             @role(['admin', 'teacher'])
                                 <th>Actions</th>
-                            @endrole
-                            @role(['student'])
-                                <th>Posted By</th>
                             @endrole
                             </thead>
                             <tbody>
@@ -49,6 +49,9 @@
                                     <td><?php echo $i; ?></td>
                                     <td title="Click to view more information"><a href="{{ URL::to('job/' . $job->id.'/#title') }}">{{ ucwords($job->job_title) }}</a></td>
                                     <td>{{ ucwords($job->credits) }}</td>
+                                    @role(['admin', 'student'])
+                                        <td title="Click to view more information"><a href="{{ URL::to('teacher/' . $job->jobPostedBy->id.'/#title') }}">{{ ucwords($job->jobPostedBy->teacherInfo->name) }}</a></td>
+                                    @endrole
                                     @role(['admin', 'teacher'])
                                         <td>
                                             <a href="{{ URL::to('job/' . $job->id.'/edit#title') }}" class="btn btn-xs btn-primary">Edit</a>
@@ -59,9 +62,6 @@
                                                 {{ Form::close() }}
                                             </div>
                                         </td>
-                                    @endrole
-                                    @role(['student'])
-                                        <td title="Click to view more information"><a href="{{ URL::to('teacher/' . $job->jobPostedBy->id.'/#title') }}">{{ ucwords($job->jobPostedBy->teacherInfo->name) }}</a></td>
                                     @endrole
                                 </tr>
                                 <?php $i++; ?>

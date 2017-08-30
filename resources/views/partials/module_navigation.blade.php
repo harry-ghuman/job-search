@@ -11,7 +11,7 @@
         </a>
         <ul class="dropdown-menu" role="menu">
             <li><a href="{{ route('job.create') }}">Create Job</a></li>
-            <li><a href="{{ route('job.index') }}">View Jobs Posted</a></li>
+            <li><a href="{{ route('job.viewPostedJobs', App\Teacher::where('user_id', Auth::user()->id)->value('id')) }}">View Jobs Posted</a></li>
         </ul>
     </li>
 @endrole

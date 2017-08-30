@@ -22,7 +22,7 @@
                         </div>
                     @endif
                     {{ Form::model(null, array('route' => array('job.store'), 'method' => 'POST', 'class' => "form-horizontal")) }}
-                        {{ Form::hidden('teacher_id', \Illuminate\Support\Facades\Auth::user()->id) }}
+                        {{ Form::hidden('teacher_id', App\Teacher::where('user_id', Auth::user()->id)->value('id')) }}
                         <div class="form-group">
                             {{ Form::label('job_title', 'Job Title',['class'=>'col-sm-2 control-label']) }}
                             <div class="col-sm-10">
