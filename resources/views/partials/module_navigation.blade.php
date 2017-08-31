@@ -28,6 +28,9 @@
         </a>
 
         <ul class="dropdown-menu" role="menu">
+            @role('admin')
+                <li><a href="{{ route('admin.show', 1) }}">My profile</a></li>
+            @endrole
             @role('teacher')
                 <li><a href="{{ route('teacher.show', App\Teacher::where('user_id', Auth::user()->id)->value('id')) }}">My profile</a></li>
             @endrole

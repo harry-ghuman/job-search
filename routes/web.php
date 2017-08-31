@@ -23,4 +23,5 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('student', 'StudentController',['except' => ['create','store']]);
     Route::get('/job/viewPostedJobs/{id}', ['as'=>'job.viewPostedJobs','uses'=>'JobController@jobsPostedByTeacher']);
     Route::resource('job', 'JobController');
+    Route::resource('admin', 'AdminController', ['only' => ['show', 'edit', 'update']]);
 });
