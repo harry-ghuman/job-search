@@ -39,6 +39,7 @@
                                     <th>Posted By</th>
                                 @endrole
                                 @role(['admin', 'teacher'])
+                                    <th>Applications Received</th>
                                     <th>Actions</th>
                                 @endrole
                             </thead>
@@ -47,11 +48,17 @@
                             @foreach ($jobs as $job)
                                 <tr>
                                     <td><?php echo $i; ?></td>
-                                    <td title="Click to view more information"><a href="{{ URL::to('job/' . $job->id.'/#title') }}">{{ ucwords($job->job_title) }}</a></td>
+                                    <td title="Click to view more information"><a href="{{ URL::to('job/' . $job->id) }}">{{ ucwords($job->job_title) }}</a></td>
                                     <td>{{ ucwords($job->credits) }}</td>
+                                    @role(['admin', 'student'])
+                                        <td title="Click to view more information"><a href="{{ URL::to('teacher/' . $job->jobPostedBy->id) }}">{{ ucwords($job->jobPostedBy->teacherInfo->name) }}</a></td>
+                                    @endrole
                                     @role(['admin', 'teacher'])
                                         <td>
-                                            <a href="{{ URL::to('job/' . $job->id.'/edit#title') }}" class="btn btn-xs btn-primary">Edit</a>
+                                            <a href="{{ URL::to('job/viewJobApplications/' . $job->jobPostedBy->id) }}" class="btn btn-xs btn-warning">{{ $job->jobApplications->count() }} applicant<?php echo ($job->jobApplications->count()>1)? 's':''; ?></a>
+                                        </td>
+                                        <td>
+                                            <a href="{{ URL::to('job/' . $job->id.'/edit') }}" class="btn btn-xs btn-primary">Edit</a>
                                             <div style="display: inline-block;">
                                                 {{ Form::open(array('url' => 'job/' . $job->id,'onsubmit' => 'return confirm("Are you sure you want to delete '.$job->job_title.'?")')) }}
                                                 {{ Form::hidden('_method', 'DELETE') }}
@@ -59,9 +66,6 @@
                                                 {{ Form::close() }}
                                             </div>
                                         </td>
-                                    @endrole
-                                    @role(['admin', 'student'])
-                                        <td title="Click to view more information"><a href="{{ URL::to('teacher/' . $job->jobPostedBy->id.'/#title') }}">{{ ucwords($job->jobPostedBy->teacherInfo->name) }}</a></td>
                                     @endrole
                                 </tr>
                                 <?php $i++; ?>

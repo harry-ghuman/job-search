@@ -27,4 +27,10 @@ class Student extends Model
     {
         return $this->hasMany(StudentSkill::class,'user_id','user_id');
     }
+
+    public function jobApplication()
+    {
+        return $this->hasOne(JobApplication::class, 'student_id', 'id');
+    }
+
 }

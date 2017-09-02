@@ -51,4 +51,9 @@ class JobPolicy
     {
         return $user->can('destroy-job');
     }
+
+    public function viewJobApplications(User $user)
+    {
+        return $user->can('view-job-applications');
+    }
 }

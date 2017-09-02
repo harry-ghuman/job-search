@@ -162,4 +162,28 @@ class JobController extends Controller
 
         return View::make('job.index')->with('jobs', $jobs);
     }
+
+    public function viewJobApplications($job_id)
+    {
+        $this->authorize('viewJobApplications', Job::class);
+
+        $job_applications = JobApplication::where('teacher_id', $job_id)->get()->map(function($item, $key){
+            return $item->student_id;
+        })->toArray();
+        $student_ids = array_values($job_applications);
+
+        $students = Student::whereIn('id', $student_ids)->get()->sortBy('id');
+
+        return view('student.index', compact('students', 'job_id'));
+    }
+
+    public function updateJobApplicationStatus($student_id, $job_id, $status)
+    {
+        $job_application = JobApplication::where('job_id', $job_id)->where('student_id', $student_id)->first();
+
+        $job_application->status    = ($status == 1)? 'accepted': 'rejected';
+        $job_application->save();
+
+        return redirect('job/viewJobApplications/'.$job_id);
+    }
 }
