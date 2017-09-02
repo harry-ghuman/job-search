@@ -59,4 +59,9 @@ class StudentPolicy
     {
         return $user->can('destroy-student');
     }
+
+    public function applyJob(User $user)
+    {
+        return $user->can('apply-job');
+    }
 }

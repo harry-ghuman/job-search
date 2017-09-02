@@ -12,4 +12,9 @@ class Job extends Model
     {
         return $this->hasOne(Teacher::class, 'id', 'teacher_id');
     }
+
+    public function jobApplications()
+    {
+        return $this->hasMany(JobApplication::class, 'job_id', 'id');
+    }
 }

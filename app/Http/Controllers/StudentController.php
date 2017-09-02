@@ -3,15 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateStudentRequest;
+use App\JobApplication;
 use App\Student;
 use App\StudentEducation;
 use App\StudentWorkExperience;
 use App\StudentSkill;
 use App\User;
+use App\Job;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Input;
+use App\Http\Controllers\Auth;
 
 class StudentController extends Controller
 {
@@ -156,5 +159,21 @@ class StudentController extends Controller
         User::find($student->user_id)->delete();
 
         return redirect('/student');
+    }
+
+    public function applyJob($student_id, $job_id)
+    {
+        $this->authorize('applyJob', Student::class);
+
+        $teacher_id = Job::where('id', $job_id)->first()->teacher_id;
+
+        JobApplication::create([
+            'job_id'        => $job_id,
+            'teacher_id'    => $teacher_id,
+            'student_id'    => $student_id,
+            'status'        => 'applied',
+        ]);
+
+        return redirect('/job/'.$job_id);
     }
 }

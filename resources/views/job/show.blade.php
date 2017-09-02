@@ -34,11 +34,24 @@
                             <th>Requirements</th>
                             <td>{!! nl2br(e(ucfirst($job->requirements))) !!}</td>
                         </tr>
+                        @if(isset($application_status))
+                            <tr>
+                                <th>Application Status</th>
+                                <td>
+                                    <span class="label label-warning">{{ ucfirst($application_status) }}</span>
+                                </td>
+                            </tr>
+                        @endif
                         </tbody>
                     </table>
                     <div class="text-right ">
                         @role(['admin', 'teacher'])
                             <a href="{{ URL::to('job/' . $job->id.'/edit#title') }}" class="btn btn-sm btn-primary">Edit Job</a>
+                        @endrole
+                        @role('student')
+                            @if(!isset($application_status))
+                                <a href="{{ URL::to('student/'.App\Student::where('user_id', Auth::user()->id)->value('id').'/applyJob/'.$job->id) }}" class="btn btn-sm btn-primary">Apply to Job</a>
+                            @endif
                         @endrole
                         <a href="{{ url()->previous() }}" class="btn btn-sm btn-primary">Back</a>
                     </div>

@@ -32,15 +32,15 @@
                         @endrole
                         <table class="table table-condensed">
                             <thead>
-                            <th>#</th>
-                            <th>Job title</th>
-                            <th>Credits</th>
-                            @role(['admin', 'student'])
-                                <th>Posted By</th>
-                            @endrole
-                            @role(['admin', 'teacher'])
-                                <th>Actions</th>
-                            @endrole
+                                <th>#</th>
+                                <th>Job title</th>
+                                <th>Credits</th>
+                                @role(['admin', 'student'])
+                                    <th>Posted By</th>
+                                @endrole
+                                @role(['admin', 'teacher'])
+                                    <th>Actions</th>
+                                @endrole
                             </thead>
                             <tbody>
                             <?php $i = 1; ?>
@@ -49,9 +49,6 @@
                                     <td><?php echo $i; ?></td>
                                     <td title="Click to view more information"><a href="{{ URL::to('job/' . $job->id.'/#title') }}">{{ ucwords($job->job_title) }}</a></td>
                                     <td>{{ ucwords($job->credits) }}</td>
-                                    @role(['admin', 'student'])
-                                        <td title="Click to view more information"><a href="{{ URL::to('teacher/' . $job->jobPostedBy->id.'/#title') }}">{{ ucwords($job->jobPostedBy->teacherInfo->name) }}</a></td>
-                                    @endrole
                                     @role(['admin', 'teacher'])
                                         <td>
                                             <a href="{{ URL::to('job/' . $job->id.'/edit#title') }}" class="btn btn-xs btn-primary">Edit</a>
@@ -62,6 +59,9 @@
                                                 {{ Form::close() }}
                                             </div>
                                         </td>
+                                    @endrole
+                                    @role(['admin', 'student'])
+                                        <td title="Click to view more information"><a href="{{ URL::to('teacher/' . $job->jobPostedBy->id.'/#title') }}">{{ ucwords($job->jobPostedBy->teacherInfo->name) }}</a></td>
                                     @endrole
                                 </tr>
                                 <?php $i++; ?>

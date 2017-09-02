@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateJobRequest;
 use App\Http\Requests\UpdateJobRequest;
 use App\Job;
+use App\JobApplication;
+use App\Student;
 use App\User;
 use App\Teacher;
 use Illuminate\Http\Request;
@@ -73,7 +75,16 @@ class JobController extends Controller
 
         $this->authorize('show', $job);
 
-        return View::make('job.show')->with('job', $job);
+        if(Auth::user()->hasRole('student')){
+            $student_id = Student::where('user_id', Auth::user()->id)->value('id');
+            $job_application = JobApplication::where('student_id', $student_id)->where('teacher_id', $job->teacher_id)->first();
+
+            if(isset($job_application)){
+                return view('job.show', ['job' => $job, 'application_status' => $job_application->status]);
+            }
+        }
+
+        return view('job.show', ['job' => $job]);
     }
 
     /**

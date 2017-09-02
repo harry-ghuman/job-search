@@ -41,20 +41,26 @@ class PermissionRoleTableSeeder extends Seeder
         $perm_job_update        = Permission::where('name', 'update-job')->get()->first();
         $perm_job_destroy       = Permission::where('name', 'destroy-job')->get()->first();
 
+        $perm_apply_job             = Permission::where('name', 'apply-job')->get()->first();
+        $perm_view_job_applications = Permission::where('name', 'view-job-applications')->get()->first();
+
         $role_admin->attachPermissions([
             $perm_teacher_index, $perm_teacher_show, $perm_teacher_edit, $perm_teacher_update, $perm_teacher_destroy,
             $perm_student_index, $perm_student_show, $perm_student_edit, $perm_student_update, $perm_student_destroy,
             $perm_job_index, $perm_job_show, $perm_job_edit, $perm_job_update, $perm_job_destroy,
+            $perm_view_job_applications,
         ]);
         $role_teacher->attachPermissions([
             $perm_teacher_show, $perm_teacher_edit, $perm_teacher_update,
             $perm_student_show,
             $perm_job_index, $perm_job_create, $perm_job_store, $perm_job_show, $perm_job_edit, $perm_job_update, $perm_job_destroy,
+            $perm_view_job_applications,
         ]);
         $role_student->attachPermissions([
             $perm_teacher_show,
             $perm_student_show, $perm_student_edit, $perm_student_update,
             $perm_job_index, $perm_job_show,
+            $perm_apply_job,
         ]);
     }
 }

@@ -19,9 +19,10 @@ Auth::routes();
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/dashboard', 'HomeController@index')->name('dashboard');
+    Route::resource('admin', 'AdminController', ['only' => ['show', 'edit', 'update']]);
     Route::resource('teacher', 'TeacherController',['except' => ['create','store']]);
     Route::resource('student', 'StudentController',['except' => ['create','store']]);
     Route::get('/job/viewPostedJobs/{id}', ['as'=>'job.viewPostedJobs','uses'=>'JobController@jobsPostedByTeacher']);
+    Route::get('/student/{student_id}/applyJob/{job_id}', ['uses'=>'StudentController@applyJob']);
     Route::resource('job', 'JobController');
-    Route::resource('admin', 'AdminController', ['only' => ['show', 'edit', 'update']]);
 });
