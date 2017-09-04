@@ -1,4 +1,4 @@
-@extends('layouts.master_module')
+@extends('layouts.modulePage')
 @section('page.title')
     Edit {{ ucwords($student->studentInfo->name) }}'s profile | Students
 @endsection

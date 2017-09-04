@@ -1,4 +1,4 @@
-@extends('layouts.master_module', ['teacher_id' => $user->id])
+@extends('layouts.modulePage')
 @section('page.title')
     Edit {{ ucwords($user->name) }}'s profile | Teachers
 @endsection

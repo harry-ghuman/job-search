@@ -1,4 +1,4 @@
-@extends('layouts.master_module')
+@extends('layouts.modulePage')
 @section('page.title')
 {{ ucwords($user->name) }} | Admin
 @endsection
