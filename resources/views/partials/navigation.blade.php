@@ -1,4 +1,8 @@
-<li><a href="{!! route('dashboard') !!}">Home</a></li>
+@if (Auth::guest())
+    <li><a href="{{ route('/') }}">Home</a></li>
+@else
+    <li><a href="{{ route('dashboard') }}">Home</a></li>
+@endif
 @role('admin')
     <li><a href="{{ route('teacher.index') }}">Teachers</a></li>
     <li><a href="{{ route('student.index') }}">Students</a></li>
@@ -20,9 +24,8 @@
 @endrole
 @if (Auth::guest())
     <li><a href="{{ route('login') }}">Login</a></li>
-    <li><a href="{{ route('register') }}">Register</a></li>
 @else
-    <li class="dropdown">
+    <li class="{{ isset($footer_navigation)? 'dropup': 'dropdown' }}">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
             My Account <span class="caret"></span>
         </a>

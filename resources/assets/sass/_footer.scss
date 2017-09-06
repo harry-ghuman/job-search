@@ -1,26 +1,31 @@
 #footer{
   background-color: #3A3839;
   padding: 20px 0;
+  border-top: 2px solid gray;
   .dropdown-menu {
     background-color: black;
     >li>a:hover {
       background-color: dimgray;
     }
   }
-  .footer-logo{
-    height: 165px;
-    vertical-align: top;
+  @media(max-width: $screen-xs-max) {
+    .footer-logo{
+      width: 200px;
+      margin: 0 auto;
+    }
   }
   .quick-links{
-    display: inline-block;
     text-align: center;
-    margin-left: 50px;
+    margin-top: 20px;
   }
   .quick-links {
     .title {
       color: white;
       font-size: 20px;
       font-weight: bold;
+	  @media(max-width: $screen-sm-max) {
+        font-size: 18px;
+      }
     }
     ul {
       padding: 0px;

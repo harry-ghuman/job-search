@@ -1,9 +1,9 @@
 @extends('layouts.master')
 @section('page.main')
-    @include('partials.module_header')
+    @include('partials.header')
     <div class="banner {{ (isset($homepage))? 'banner_home':'banner_interior' }}"></div>
-    <div id="home">
+    <div id="home_module">
         @yield('page.body')
     </div>
-    @include('partials.module_footer')
+    @include('partials.footer')
 @endsection

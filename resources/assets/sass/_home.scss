@@ -1,0 +1,117 @@
+#home{
+  .banner{
+    background-image: url(/img/homepage_banner.jpg);
+    background-repeat: no-repeat;
+    height: 575px;
+    @media(max-width: $screen-md-max) {
+      height: 550px;
+    }
+    @media(max-width: $screen-xs-max) {
+      height: 425px;
+    }
+    .title{
+      font-size: 42px;
+      color: white;
+      font-family: 'Catamaran';
+      font-weight: bolder;
+      text-align: center;
+      padding-top: 250px;
+      text-shadow: 10px 10px 30px black;
+      text-transform: uppercase;
+	  @media(max-width: $screen-sm-max) {
+        font-size: 40px;
+        padding-top: 225px;
+	  }	
+	  @media(max-width: $screen-xs-max) {
+        font-size: 30px;
+        padding-top: 200px;
+        line-height: 1.0em;
+	  }	
+    }
+    .title-blurb{
+      font-size: 20px;
+      color: white;
+      font-family: 'Catamaran';
+      font-weight: 100;
+      text-align: center;
+      margin-top: 10px;
+      text-shadow: 15px 15px 40px black;
+    }
+  }
+  .section{
+    background-image: url(/img/module/carbonfibre-texture.jpg);
+    background-repeat: repeat;
+    padding: 30px;
+    .title{
+      font-size: 32px;
+      color: white;
+      font-family: 'Catamaran';
+      font-weight: bolder;
+      text-align: center;
+      text-transform: uppercase;
+      @media(max-width: $screen-md-max) {
+        font-size: 25px;
+      }
+      @media(max-width: $screen-xs-max) {
+        font-size: 18px;
+      }
+    }
+    .divider{
+      border-bottom: 1px solid white;
+      width: 14%;
+      margin: 10px auto 15px auto;
+    }
+    .title-blurb{
+      font-size: 20px;
+      color: white;
+      font-family: 'Catamaran';
+      font-weight: 300;
+      text-align: center;
+      @media(max-width: $screen-xs-max) {
+        font-size: 15px;
+      }
+    }
+    .btn-more{
+      margin: 30px auto;
+      font-size: 20px;
+      font-family:inherit;
+      @include button-variant(white, #3A3839, white);
+      @media(max-width: $screen-xs-max) {
+        margin: 15px auto;
+        font-size: 14px;
+      }
+    }
+  }
+  .university{
+    .col{
+      height: 500px;
+      background-image: url(/img/homepage_section_bg.jpg);
+      background-repeat: no-repeat;
+      background-size: cover;
+      padding: 5px;
+      @media(max-width: $screen-sm-max) {
+        height: 375px;
+      }
+      @media(max-width: $screen-xs-max) {
+        height: auto;
+        margin-bottom: 15px;
+      }
+    }
+    .col-inner{
+      background: rgba(0, 0, 0, 0.8);
+      margin: 61px;
+      padding: 50px;
+      height: 373px;
+      @media(max-width: $screen-sm-max) {
+        margin: 25px;
+        padding: 20px;
+        height: 325px;
+      }
+      @media(max-width: $screen-xs-max) {
+        margin: 15px;
+        padding: 10px;
+        height: auto;
+      }
+    }
+  }
+}

@@ -11,7 +11,7 @@
     <div class="page-content">
         <div class="container">
             <div class="row">
-                <div class="col-sm-6 col-sm-offset-3">
+                <div class="col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1">
                     @if ($errors->any())
                         <div class="alert alert-danger">
                             <ul>
@@ -86,34 +86,36 @@
                             <span class="badge">2</span>&nbsp;
                             <label><h3><strong>Education</strong></h3></label>
                         </div>
-                        <table class="table table-condensed education-table">
-                            <thead>
-                            <tr>
-                                <th>Program</th>
-                                <th>University</th>
-                                <th>GPA</th>
-                                <th>Year</th>
-                                <th>Country</th>
-                                <th></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach ($student_education as $education)
-                                <tr>
-                                    <td><input type="text" name="program[]" value="{{ ucwords($education->program) }}" class="form-control input-sm"></td>
-                                    <td><input type="text" name="university[]" value="{{ ucwords($education->university) }}" class="form-control input-sm"></td>
-                                    <td><input type="text" name="gpa[]" value="{{ $education->gpa }}" class="form-control input-sm"></td>
-                                    <td><input type="text" name="year[]" value="{{ $education->year }}" class="form-control input-sm"></td>
-                                    <td><input type="text" name="country[]" value="{{ ucwords($education->country) }}" class="form-control input-sm"></td>
-                                    <td title="Delete row">
-                                        <a href="javascript:void(0)" class="ibtnDel btn btn-xs btn-danger">
-                                            <span class="glyphicon glyphicon-minus"></span>
-                                        </a>
-                                    </td>
-                                </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
+                        <div class="table-responsive">
+							<table class="table table-condensed education-table">
+								<thead>
+								<tr>
+									<th>Program</th>
+									<th>University</th>
+									<th>GPA</th>
+									<th>Year</th>
+									<th>Country</th>
+									<th></th>
+								</tr>
+								</thead>
+								<tbody>
+								@foreach ($student_education as $education)
+									<tr>
+										<td><input type="text" name="program[]" value="{{ ucwords($education->program) }}" class="form-control input-sm"></td>
+										<td><input type="text" name="university[]" value="{{ ucwords($education->university) }}" class="form-control input-sm"></td>
+										<td><input type="text" name="gpa[]" value="{{ $education->gpa }}" class="form-control input-sm"></td>
+										<td><input type="text" name="year[]" value="{{ $education->year }}" class="form-control input-sm"></td>
+										<td><input type="text" name="country[]" value="{{ ucwords($education->country) }}" class="form-control input-sm"></td>
+										<td title="Delete row">
+											<a href="javascript:void(0)" class="ibtnDel btn btn-xs btn-danger">
+												<span class="glyphicon glyphicon-minus"></span>
+											</a>
+										</td>
+									</tr>
+								@endforeach
+								</tbody>
+							</table>
+						</div>
                         <div class="text-right">
                             <a href="javascript:void(0)" class="btn btn-xs btn-primary" id="addEducationRow">
                                 <span class="glyphicon glyphicon-plus"></span>&nbsp;Add Row
@@ -124,31 +126,33 @@
                             <span class="badge">3</span>&nbsp;
                             <label><h3><strong>Work experience</strong></h3></label>
                         </div>
-                        <table class="table table-condensed work-experience-table">
-                            <thead>
-                            <th>Title</th>
-                            <th>Company</th>
-                            <th>Duties</th>
-                            <th>Start date</th>
-                            <th>End date</th>
-                            </thead>
-                            <tbody>
-                            @foreach ($student_work_experience as $work)
-                                <tr>
-                                    <td><input type="text" name="job_title[]" value="{{ ucwords($work->job_title) }}" class="form-control input-sm"></td>
-                                    <td><input type="text" name="company[]" value="{{ ucwords($work->company) }}" class="form-control input-sm"></td>
-                                    <td><input type="text" name="duties[]" value="{{ ucfirst($work->duties) }}" class="form-control input-sm"></td>
-                                    <td><input type="date" name="start_date[]" value="{{ $work->start_date }}" class="form-control input-sm"></td>
-                                    <td><input type="date" name="end_date[]" value="{{ $work->end_date }}" class="form-control input-sm"></td>
-                                    <td title="Delete row">
-                                        <a href="javascript:void(0)" class="ibtnDel btn btn-xs btn-danger">
-                                            <span class="glyphicon glyphicon-minus"></span>
-                                        </a>
-                                    </td>
-                                </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
+                        <div class="table-responsive">
+							<table class="table table-condensed work-experience-table">
+								<thead>
+								<th>Title</th>
+								<th>Company</th>
+								<th>Duties</th>
+								<th>Start date</th>
+								<th>End date</th>
+								</thead>
+								<tbody>
+								@foreach ($student_work_experience as $work)
+									<tr>
+										<td><input type="text" name="job_title[]" value="{{ ucwords($work->job_title) }}" class="form-control input-sm"></td>
+										<td><input type="text" name="company[]" value="{{ ucwords($work->company) }}" class="form-control input-sm"></td>
+										<td><input type="text" name="duties[]" value="{{ ucfirst($work->duties) }}" class="form-control input-sm"></td>
+										<td><input type="date" name="start_date[]" value="{{ $work->start_date }}" class="form-control input-sm"></td>
+										<td><input type="date" name="end_date[]" value="{{ $work->end_date }}" class="form-control input-sm"></td>
+										<td title="Delete row">
+											<a href="javascript:void(0)" class="ibtnDel btn btn-xs btn-danger">
+												<span class="glyphicon glyphicon-minus"></span>
+											</a>
+										</td>
+									</tr>
+								@endforeach
+								</tbody>
+							</table>
+						</div>
                         <div class="text-right">
                             <a href="javascript:void(0)" class="btn btn-xs btn-primary" id="addWorkExperienceRow">
                                 <span class="glyphicon glyphicon-plus"></span>&nbsp;Add Row

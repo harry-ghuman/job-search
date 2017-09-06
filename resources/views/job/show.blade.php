@@ -11,7 +11,7 @@
     <div class="page-content">
         <div class="container">
             <div class="row">
-                <div class="col-sm-6 col-sm-offset-3">
+                <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
                     <table class="table table-condensed table-bordered table-hover">
                         <tbody>
                         <tr>
@@ -46,7 +46,7 @@
                     </table>
                     <div class="text-right ">
                         @role(['admin', 'teacher'])
-                            <a href="{{ URL::to('job/' . $job->id.'/edit#title') }}" class="btn btn-sm btn-primary">Edit Job</a>
+                            <a href="{{ URL::to('job/' . $job->id.'/edit') }}" class="btn btn-sm btn-primary">Edit Job</a>
                         @endrole
                         @role('student')
                             @if(!isset($application_status))

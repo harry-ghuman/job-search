@@ -2,6 +2,9 @@
   height: 320px;
   background-size: cover;
   background-position: 50% 60%;
+  @media(max-width: $screen-xs-max) {
+    height: 265px;
+  }
 }
 .banner_home{
   background-image: url(/img/module/home_banner.jpg);
@@ -9,7 +12,7 @@
 .banner_interior{
   background-image: url(/img/module/interior_banner.jpg);
 }
-#home{
+#home_module{
   background-color: #2A2A2A;
   color: white;
   .title{
@@ -24,10 +27,14 @@
     text-align: center;
     text-shadow: 15px 15px 40px black;
     text-transform: uppercase;
+    @media(max-width: $screen-xs-max) {
+      line-height: 1.0em;
+      font-size: 30px;
+      padding: 15px 0;
+    }
   }
   .page-content{
     padding: 20px 0;
-    border-bottom: 2px solid gray;
     a{
       color: white;
     }
