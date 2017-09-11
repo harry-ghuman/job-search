@@ -27,4 +27,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/student/{student_id}/job/{job_id}/updateJobApplicationStatus/{status}', ['uses'=>'JobController@updateJobApplicationStatus']);
     Route::get('/student/{student_id}/applyJob/{job_id}', ['uses'=>'StudentController@applyJob']);
     Route::resource('job', 'JobController');
+    Route::get('resetPassword', function() {return view('partials.resetPassword'); })->name('user.resetpassword');
+    Route::post('resetPassword', 'Auth\ResetPasswordController@userResetPasswordUpdate')->name('user.resetpassword');
 });

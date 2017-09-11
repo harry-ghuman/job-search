@@ -40,6 +40,7 @@
             @role('student')
                 <li><a href="{{ route('student.show', App\Student::where('user_id', Auth::user()->id)->value('id')) }}">My profile</a></li>
             @endrole
+            <li><a href="{{ route('user.resetpassword') }}">Reset Password</a></li>
             <li>
                 <a href="{{ route('logout') }}"
                    onclick="event.preventDefault();
