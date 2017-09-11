@@ -8,6 +8,10 @@ class Student extends Model
 {
     public $timestamps = false;
 
+    protected $fillable = [
+        'user_id'
+    ];
+
     public function studentInfo()
     {
         return $this->hasOne(User::class, 'id', 'user_id');

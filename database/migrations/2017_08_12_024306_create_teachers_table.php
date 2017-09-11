@@ -17,9 +17,9 @@ class CreateTeachersTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
-            $table->string('job_title');
+            $table->string('job_title')->nullable();
             $table->string('special_designation')->nullable();
-            $table->string('department');
+            $table->string('department')->nullable();
             $table->string('phone')->nullable();
             $table->string('office_address')->nullable();
         });

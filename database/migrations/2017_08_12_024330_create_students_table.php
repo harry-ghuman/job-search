@@ -17,13 +17,13 @@ class CreateStudentsTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
-            $table->integer('student_id')->unique();
-            $table->string('semester');
-            $table->integer('year');
-            $table->string('phone');
-            $table->string('gender');
-            $table->string('residency_status');
-            $table->string('country');
+            $table->integer('student_id')->unique()->nullable();
+            $table->string('semester')->nullable();
+            $table->integer('year')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('gender')->nullable();
+            $table->string('residency_status')->nullable();
+            $table->string('country')->nullable();
         });
     }
 

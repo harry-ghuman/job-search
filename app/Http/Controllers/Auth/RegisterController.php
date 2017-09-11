@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use App\Teacher;
+use App\Student;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
 class RegisterController extends Controller
@@ -27,7 +30,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/dashboard';
 
     /**
      * Create a new controller instance.
@@ -62,10 +65,24 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $role_id = DB::table('roles')->where('name', $data['role'])->pluck('id');
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
+        if($data['role'] == 'teacher'){
+            Teacher::create([
+                'user_id' => $user->id,
+            ]);
+        }
+        if($data['role'] == 'student'){
+            Student::create([
+                'user_id' => $user->id,
+            ]);
+        }
+        $user->roles()->attach($role_id);
+
+        return $user;
     }
 }
