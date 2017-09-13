@@ -13,21 +13,30 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        $names      = ['John Doe','Arunita Jaekal','Zaid Ali','Harpuneet Ghuman','Dave Johnson'];
-        $emails     = ['johndoe@jobsearch.com','arunita@jobsearch.com','zaidali@jobsearch.com','harpuneetghuman@jobsearch.com','davejohnson@jobsearch.com'];
-        $password   = bcrypt('secret');
+        $faker = Faker\Factory::create();
+
         $created_at = Carbon::now();
         $updated_at = Carbon::now();
 
-        for($i=0;$i<count($names);$i++){
-            $user = [
-                'name'       => $names[$i],
-                'email'      => $emails[$i],
-                'password'   => $password,
-                'created_at' => $created_at,
-                'updated_at' => $updated_at,
-            ];
-            User::create($user);
+        User::create([
+            'name'       => 'admin',
+            'email'      => 'support@jobsearch.com',
+            'password'   => bcrypt('secret'),
+            'created_at' => $created_at,
+            'updated_at' => $updated_at,
+        ]);
+        if(config('app.env') == 'local'){
+            for($i=2;$i<=20;$i++){
+                $user = [
+                    'name'       => $faker->name,
+                    'email'      => $faker->unique()->userName.'@jobsearch.com',
+                    'password'   => bcrypt($faker->password),
+                    'created_at' => $created_at,
+                    'updated_at' => $updated_at,
+                ];
+                User::create($user);
+            }
         }
+
     }
 }

@@ -15,48 +15,54 @@ class StudentsTableSeeder extends Seeder
      */
     public function run()
     {
-        $user_id            = ['4','5'];
-        $student_id         = ['104509784','104509795'];
-        $semester           = ['winter','spring'];
-        $year               = ['2016','2016'];
-        $phone              = ['6479368403','6479369963'];
-        $gender             = ['male','male'];
-        $residency_status   = ['international student','international student'];
-        $country            = ['india','nigeria'];
+        $faker = Faker\Factory::create();
 
-        for($i=0;$i<count($user_id);$i++){
-            $student = [
-                'user_id'           => $user_id[$i],
-                'student_id'        => $student_id[$i],
-                'semester'          => $semester[$i],
-                'year'              => $year[$i],
-                'phone'             => $phone[$i],
-                'gender'            => $gender[$i],
-                'residency_status'  => $residency_status[$i],
-                'country'           => $country[$i],
-            ];
-            Student::create($student);
+        $universities   = [
+            'University of Alberta', 'University of Windsor', 'University of Manitoba',
+            'University of Waterloo', 'University of Toronto', 'York University', 'University of Guelph',
+        ];
+        $programs   = [
+            'Bachelor of Technology', 'Bachelor of Arts', 'Bachelor of Science',
+        ];
+
+        $users = DB::table('role_user')
+            ->where('role_id','=', '3')
+            ->orderBy('user_id')
+            ->get();
+
+        foreach ($users as $user) {
+            Student::create([
+                'user_id'           => $user->user_id,
+                'student_id'        => '1045097'.$faker->unique()->numberBetween(10,99),
+                'semester'          => $faker->randomElement(['Fall', 'Winter', 'Summer']),
+                'year'              => $faker->numberBetween(2015,2017),
+                'phone'             => $faker->phoneNumber,
+                'gender'            => $faker->randomElement(['Male', 'Female']),
+                'residency_status'  => $faker->randomElement(['International Student', 'Citizen/Permanent Resident']),
+                'country'           => $faker->country,
+            ]);
+            StudentEducation::create([
+                'user_id'       => $user->user_id,
+                'program'       => $faker->randomElement($programs),
+                'university'    => $faker->randomElement($universities),
+                'gpa'           => $faker->randomFloat(1,1,4),
+                'year'          => $faker->numberBetween(2010,2015),
+                'country'       => 'Canada',
+            ]);
+            StudentWorkExperience::create([
+                'user_id'       => $user->user_id,
+                'job_title'     => $faker->jobTitle,
+                'company'       => $faker->company,
+                'duties'        => $faker->text(50),
+                'start_date'    => $faker->date(),
+                'end_date'      => $faker->date(),
+            ]);
+            for($i=1;$i<=5;$i++){
+                StudentSkill::create([
+                    'user_id'       => $user->user_id,
+                    'skill_name'    => $faker->word,
+                ]);
+            }
         }
-
-        StudentEducation::create([
-            'user_id'       =>'4',
-            'program'       =>'B.Tech',
-            'university'    =>'GNDU',
-            'gpa'           =>'3',
-            'year'          =>'2015',
-            'country'       =>'india',
-        ]);
-        StudentWorkExperience::create([
-            'user_id'       =>'4',
-            'job_title'     =>'Web developer',
-            'company'       =>'NYNDesigns',
-            'duties'        =>'Working on requests',
-            'start_date'    =>'2017-08-20 17:04:13',
-            'end_date'      =>'2017-08-20 17:04:13',
-        ]);
-        StudentSkill::create([
-            'user_id'       =>'4',
-            'skill_name'    =>'PHP',
-        ]);
     }
 }

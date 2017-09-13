@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\Job;
+use Carbon\Carbon;
 
 class JobsTableSeeder extends Seeder
 {
@@ -12,13 +13,21 @@ class JobsTableSeeder extends Seeder
      */
     public function run()
     {
-        Job::create([
-            'teacher_id'    =>'1',
-            'job_title'     =>'PHP Developer',
-            'credits'       =>'6',
-            'description'   =>'Web developer position requiring good knowledge of PHP.',
-            'created_at'    =>'2017-08-20 17:04:13',
-            'updated_at'    =>'2017-08-20 17:04:13',
-        ]);
+        $faker = Faker\Factory::create();
+
+        $teachers = DB::table('teachers')->select('id')->get();
+
+        foreach ($teachers as $teacher) {
+            Job ::create([
+                'teacher_id'        => $teacher->id,
+                'job_title'         => $faker->jobTitle,
+                'credits'           => $faker->randomElement([3, 6, 9]),
+                'description'       => $faker->text(50),
+                'responsibilities'  => $faker->paragraph(10),
+                'requirements'      => $faker->paragraph(10),
+                'created_at'        => Carbon::now(),
+                'updated_at'        => Carbon::now(),
+            ]);
+        }
     }
 }
