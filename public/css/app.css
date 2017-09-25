@@ -8514,6 +8514,19 @@ button.close {
   color: white;
 }
 
+.flash-notification {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  margin-top: 60px;
+}
+
+@media (max-width: 767px) {
+  .flash-notification {
+    margin-top: 112px;
+  }
+}
+
 #home .banner {
   background-image: url(/img/homepage_banner.jpg);
   background-repeat: no-repeat;

@@ -40,3 +40,12 @@
     }
   }
 }
+.flash-notification{
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  margin-top: 60px;
+  @media(max-width: $screen-xs-max) {
+    margin-top: 112px;
+  }
+}

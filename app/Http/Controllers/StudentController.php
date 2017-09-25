@@ -139,7 +139,9 @@ class StudentController extends Controller
             }
         }
 
-        return redirect('/student/'.$student->id.'#title');
+        flash('Student information has been updated successfully.')->success()->important();
+
+        return redirect('/student/'.$student->id);
     }
 
     /**
@@ -155,8 +157,11 @@ class StudentController extends Controller
         StudentEducation::where('user_id','=', $student->user_id)->delete();
         StudentWorkExperience::where('user_id','=', $student->user_id)->delete();
         StudentSkill::where('user_id','=', $student->user_id)->delete();
+        JobApplication::where('student_id','=', $student->id)->delete();
         Student::find($student)->first()->delete();
         User::find($student->user_id)->delete();
+
+        flash('Student information has been deleted successfully.')->success()->important();
 
         return redirect('/student');
     }
@@ -173,6 +178,8 @@ class StudentController extends Controller
             'student_id'    => $student_id,
             'status'        => 'applied',
         ]);
+
+        flash('Successfully applied to job. Your application status has been updated.')->success()->important();
 
         return redirect('/job/'.$job_id);
     }

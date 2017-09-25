@@ -54,6 +54,8 @@ class JobController extends Controller
 
         Job::create(request(['teacher_id', 'job_title','description','credits','responsibilities','requirements']));
 
+        flash('Job has been created successfully.')->success()->important();
+
         if(Auth::user()->hasRole('teacher')){
             $teacher_id = Teacher::where('user_id', Auth::user()->id)->value('id');
             return redirect(route('job.viewPostedJobs', $teacher_id));
@@ -122,7 +124,7 @@ class JobController extends Controller
         $job->requirements      = Input::get('requirements');
         $job->save();
 
-
+        flash('Job information has been updated successfully.')->success()->important();
 
         if(Auth::user()->hasRole('teacher')){
             $teacher_id = Teacher::where('user_id', Auth::user()->id)->value('id');
@@ -144,6 +146,8 @@ class JobController extends Controller
         $this->authorize('destroy', $job);
 
         Job::find($job->id)->delete();
+
+        flash('Job information has been deleted successfully.')->success()->important();
 
         if(Auth::user()->hasRole('teacher')){
             $teacher_id = Teacher::where('user_id', Auth::user()->id)->value('id');
@@ -183,6 +187,8 @@ class JobController extends Controller
 
         $job_application->status    = ($status == 1)? 'accepted': 'rejected';
         $job_application->save();
+
+        flash('Job application status has been updated successfully.')->success()->important();
 
         return redirect('job/viewJobApplications/'.$job_id);
     }

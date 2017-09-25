@@ -38,7 +38,7 @@
 											<td>
 												<a href="{{ URL::to('teacher/' . $teacher->id.'/edit') }}" class="btn btn-xs btn-primary">Edit</a>
 												<div style="display: inline-block;">
-												{{ Form::open(array('url' => 'teacher/' . $teacher->id,'onsubmit' => 'return confirm("Are you sure you want to delete '.$teacher->teacherInfo->name.'?")')) }}
+												{{ Form::open(array('url' => 'teacher/' . $teacher->id,'onsubmit' => 'return confirm("Are you sure you want to delete '.$teacher->teacherInfo->name.'? \nPlease note that all the jobs posted by '.$teacher->teacherInfo->name.' will also be deleted.")')) }}
 													{{ Form::hidden('_method', 'DELETE') }}
 													{{ Form::submit('Delete', array('class' => 'btn btn-xs btn-primary')) }}
 												{{ Form::close() }}

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UpdateTeacherRequest;
 use App\Teacher;
 use App\User;
+use App\Job;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Input;
@@ -78,6 +79,8 @@ class TeacherController extends Controller
         $teacher->office_address        = Input::get('office_address');
         $teacher->save();
 
+        flash('Teacher information has been updated successfully.')->success()->important();
+
         return redirect('/teacher');
     }
 
@@ -91,8 +94,11 @@ class TeacherController extends Controller
     {
         $this->authorize('destroy', $teacher);
 
+        Job::where('teacher_id','=', $teacher->id)->delete();
         Teacher::find($teacher)->first()->delete();
         User::find($teacher->user_id)->delete();
+
+        flash('Teacher information has been deleted successfully.')->success()->important();
 
         return redirect('/teacher');
     }

@@ -34,6 +34,8 @@ class AdminController extends Controller
         $user->name = Input::get('name');
         $user->save();
 
+        flash('Admin information has been updated successfully.')->success()->important();
+
         return redirect('/admin/1');
     }
 }

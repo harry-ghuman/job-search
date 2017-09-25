@@ -26,7 +26,7 @@ class UpdateStudentRequest extends FormRequest
         return [
             'name'              => 'required|max:100',
             'student_id'        => 'required|digits:9',
-            'semester'          => 'alpha|min:6|max:6',
+            'semester'          => 'alpha|min:4|max:6',
             'student_year'      => 'digits:4',
             'phone'             => 'digits:10',
             'email'             => 'required|email',

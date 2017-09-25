@@ -54,10 +54,13 @@ class ResetPasswordController extends Controller
             $user->update([
                 'password' => bcrypt($request->password)
             ]);
+
+
+        flash('Password has been updated successfully.')->success()->important();
             return redirect('dashboard');
         }
         else{
-            return back()->withErrors(['The current password is incorrect.']);;
+        return back()->withErrors(['The current password is incorrect.']);;
         }
     }
 }
