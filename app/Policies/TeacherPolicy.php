@@ -10,27 +10,28 @@ class TeacherPolicy
 {
     use HandlesAuthorization;
 
-    /**
-     * Determine whether the user can view the teacher.
-     *
-     * @param  \App\User  $user
-     * @param  \App\Teacher  $teacher
-     * @return mixed
-     */
-    public function view(User $user, Teacher $teacher)
+    public function before(User $user, $ability)
     {
-        //
+        if ($user->hasRole('admin')) {
+            return true;
+        }
     }
 
-    /**
-     * Determine whether the user can create teachers.
-     *
-     * @param  \App\User  $user
-     * @return mixed
-     */
-    public function create(User $user)
+    public function index(User $user)
     {
-        //
+        return $user->can('index-teacher');
+    }
+
+    public function show(User $user, Teacher $teacher)
+    {
+        return $user->can('show-teacher') &&
+            ($user->hasRole('teacher'))? $user->id === $teacher->user_id : true;
+    }
+
+    public function edit(User $user, Teacher $teacher)
+    {
+        return $user->can('edit-teacher') &&
+            $user->id === $teacher->user_id;
     }
 
     /**
@@ -42,7 +43,8 @@ class TeacherPolicy
      */
     public function update(User $user, Teacher $teacher)
     {
-        //
+        return $user->can('update-teacher') &&
+            $user->id === $teacher->user_id;
     }
 
     /**
@@ -52,8 +54,8 @@ class TeacherPolicy
      * @param  \App\Teacher  $teacher
      * @return mixed
      */
-    public function delete(User $user, Teacher $teacher)
+    public function destroy(User $user)
     {
-        //
+        return $user->can('destroy-teacher');
     }
 }

@@ -20,8 +20,8 @@ class CreateJobsTable extends Migration
             $table->string('job_title');
             $table->integer('credits');
             $table->mediumText('description');
-            $table->mediumText('responsibilities');
-            $table->mediumText('requirements');
+            $table->mediumText('responsibilities')->nullable();
+            $table->mediumText('requirements')->nullable();
             $table->timestamps();
         });
     }

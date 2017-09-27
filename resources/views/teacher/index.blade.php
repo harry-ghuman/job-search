@@ -1,4 +1,4 @@
-@extends('layouts.master_module')
+@extends('layouts.modulePage')
 @section('page.title')
     Teachers
 @endsection
@@ -18,36 +18,38 @@
                         </div>
                     <?php }
                     else{ ?>
-                        <table class="table table-condensed">
-                            <thead>
-                                <th>#</th>
-                                <th>Name</th>
-                                <th>Job title</th>
-                                <th>Department</th>
-                                <th>Actions</th>
-                            </thead>
-                            <tbody>
-                            <?php $i = 1; ?>
-                                @foreach ($teachers as $teacher)
-                                    <tr>
-                                        <td><?php echo $i; ?></td>
-                                        <td title="Click to view more"><a href="{{ URL::to('teacher/' . $teacher->id.'/#title') }}">{{ ucwords($teacher->teacherInfo->name) }}</a></td>
-                                        <td>{{ ucwords($teacher->job_title) }}</td>
-                                        <td>{{ ucwords($teacher->department) }}</td>
-                                        <td>
-                                            <a href="{{ URL::to('teacher/' . $teacher->id.'/edit#title') }}" class="btn btn-xs btn-primary">Edit</a>
-                                            <div style="display: inline-block;">
-                                            {{ Form::open(array('url' => 'teacher/' . $teacher->id,'onsubmit' => 'return confirm("Are you sure you want to delete '.$teacher->teacherInfo->name.'?")')) }}
-                                                {{ Form::hidden('_method', 'DELETE') }}
-                                                {{ Form::submit('Delete', array('class' => 'btn btn-xs btn-primary')) }}
-                                            {{ Form::close() }}
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <?php $i++; ?>
-                                @endforeach
-                            </tbody>
-                        </table>
+						<div class="table-responsive">
+							<table class="table table-condensed">
+								<thead>
+									<th>#</th>
+									<th>Name</th>
+									<th>Job title</th>
+									<th>Department</th>
+									<th>Actions</th>
+								</thead>
+								<tbody>
+								<?php $i = 1; ?>
+									@foreach ($teachers as $teacher)
+										<tr>
+											<td><?php echo $i; ?></td>
+											<td title="Click to view more information"><a href="{{ URL::to('teacher/' . $teacher->id) }}">{{ ucwords($teacher->teacherInfo->name) }}</a></td>
+											<td>{{ ucwords($teacher->job_title) }}</td>
+											<td>{{ ucwords($teacher->department) }}</td>
+											<td>
+												<a href="{{ URL::to('teacher/' . $teacher->id.'/edit') }}" class="btn btn-xs btn-primary">Edit</a>
+												<div style="display: inline-block;">
+												{{ Form::open(array('url' => 'teacher/' . $teacher->id,'onsubmit' => 'return confirm("Are you sure you want to delete '.$teacher->teacherInfo->name.'? \nPlease note that all the jobs posted by '.$teacher->teacherInfo->name.' will also be deleted.")')) }}
+													{{ Form::hidden('_method', 'DELETE') }}
+													{{ Form::submit('Delete', array('class' => 'btn btn-xs btn-primary')) }}
+												{{ Form::close() }}
+												</div>
+											</td>
+										</tr>
+										<?php $i++; ?>
+									@endforeach
+								</tbody>
+							</table>
+						</div>
                     <?php } ?>
                 </div>
             </div>

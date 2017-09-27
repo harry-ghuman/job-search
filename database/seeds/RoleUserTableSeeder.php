@@ -16,20 +16,16 @@ class RoleUserTableSeeder extends Seeder
         $role_admin     = Role::where('name', 'admin')->get()->first();
         $role_teacher   = Role::where('name', 'teacher')->get()->first();
         $role_student   = Role::where('name', 'student')->get()->first();
+        $roles          = [$role_teacher, $role_student];
 
-        $user1          = User::where('name', 'John Doe')->get()->first();
-        $user1->attachRole($role_admin);
+        $admin          = User::where('id', 1)->get()->first();
+        $admin->attachRole($role_admin);
 
-        $user2          = User::where('name', 'Arunita Jaekal')->get()->first();
-        $user2->attachRole($role_teacher);
-
-        $user3          = User::where('name', 'Zaid Ali')->get()->first();
-        $user3->attachRole($role_teacher);
-
-        $user4          = User::where('name', 'Harpuneet Ghuman')->get()->first();
-        $user4->attachRole($role_student);
-
-        $user5          = User::where('name', 'Dave Johnson')->get()->first();
-        $user5->attachRole($role_student);
+        if(config('app.env') == 'local'){
+            for($i=2;$i<=20;$i++){
+                $user   = User::where('id', $i)->get()->first();
+                $user->attachRole($roles[array_rand($roles)]);
+            }
+        }
     }
 }

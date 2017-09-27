@@ -21,6 +21,7 @@ class CreateJobApplicationsTable extends Migration
             $table->foreign('teacher_id')->references('id')->on('teachers');
             $table->integer('student_id')->unsigned();
             $table->foreign('student_id')->references('id')->on('students');
+            $table->string('status');
             $table->timestamps();
         });
     }

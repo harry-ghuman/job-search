@@ -1,4 +1,4 @@
-@extends('layouts.master_module')
+@extends('layouts.modulePage')
 @section('page.title')
     Edit {{ ucwords($teacher->teacherInfo->name) }}'s profile | Teachers
 @endsection
@@ -11,7 +11,7 @@
     <div class="page-content">
         <div class="container">
             <div class="row">
-                <div class="col-sm-6 col-sm-offset-3">
+                <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
                     @if ($errors->any())
                         <div class="alert alert-danger">
                             <ul>

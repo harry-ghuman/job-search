@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
+use App\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class ResetPasswordController extends Controller
 {
@@ -34,6 +37,30 @@ class ResetPasswordController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware('guest')->except('userResetPasswordUpdate');
+    }
+
+    public function userResetPasswordShow($id){
+        return view('');
+    }
+
+    public function userResetPasswordUpdate(Request $request){
+        $this->validate($request, [
+            'current_password' => 'required_with:password|min:6',
+            'password' => 'required|min:6|confirmed',
+        ]);
+        $user = User::where('id', $request->user_id)->first();
+        if (Hash::check($request->current_password, $user->password)){
+            $user->update([
+                'password' => bcrypt($request->password)
+            ]);
+
+
+        flash('Password has been updated successfully.')->success()->important();
+            return redirect('dashboard');
+        }
+        else{
+        return back()->withErrors(['The current password is incorrect.']);;
+        }
     }
 }

@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 use Carbon\Carbon;
 use App\Teacher;
+use Illuminate\Support\Facades\DB;
 
 class TeachersTableSeeder extends Seeder
 {
@@ -13,21 +14,25 @@ class TeachersTableSeeder extends Seeder
      */
     public function run()
     {
-        $user_id                = ['2','3'];
-        $job_title              = ['associate professor','professor'];
-        $special_designation    = ['dean','director'];
-        $department             = ['computer science','mechanical'];
-        $phone                  = ['2268527410','5198527410'];
-        $office_address         = ['R 510, Chrysler Hall, University of Windsor','R 410, Chrysler Hall, University of Windsor'];
+        $faker = Faker\Factory::create();
 
-        for($i=0;$i<count($user_id);$i++){
+        $job_titles              = ['Lecturer', 'Assistant Professor', 'Associate Professor', 'Professor'];
+        $special_designations    = ['Dean', 'Director', 'Graduate Coordinator', 'Undergraduate Coordinator', ''];
+        $departments             = ['Computer Science','Mechanical', 'Business Management', 'Medical Sciences', 'Electrical'];
+
+        $users = DB::table('role_user')
+            ->where('role_id','=', '2')
+            ->orderBy('user_id')
+            ->get();
+
+        foreach ($users as $user) {
             $teacher = [
-                'user_id'               => $user_id[$i],
-                'job_title'             => $job_title[$i],
-                'special_designation'   => $special_designation[$i],
-                'department'            => $department[$i],
-                'phone'                 => $phone[$i],
-                'office_address'        => $office_address[$i],
+                'user_id'               => $user->user_id,
+                'job_title'             => $faker->randomElement($job_titles),
+                'special_designation'   => $faker->randomElement($special_designations),
+                'department'            => $faker->randomElement($departments),
+                'phone'                 => '519.253.3000 ext.'.$faker->unique()->numberBetween(4000, 4200),
+                'office_address'        => 'R '.rand(1,6).'0'.rand(1,6).' Chrysler Hall, University of Windsor, Windsor, ON N9B 3P4',
             ];
             Teacher::create($teacher);
         }

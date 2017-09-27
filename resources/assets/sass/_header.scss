@@ -3,20 +3,23 @@
   position: absolute;
   width: 100%;
   padding: 3px 0;
+  @media(max-width: $screen-xs-max) {
+    text-align: center;
+  }
+  .logo{
+    display: inline;
+    a .heading{
+      display: inline-block;
+      font-family: Source Code Pro;
+      color: white;
+      font-size: 20px;
+      text-transform: uppercase;
+      margin-left: 5px;
+      font-weight: 600;
+    }
+  }
   .navbar{
     margin-bottom: 0px;
-    .logo{
-      display: inline;
-      a .heading{
-        display: inline-block;
-        font-family: Source Code Pro;
-        color: white;
-        font-size: 20px;
-        text-transform: uppercase;
-        margin-left: 5px;
-        font-weight: 600;
-      }
-    }
   }
   .navbar-default{
     background-color: transparent;

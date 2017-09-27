@@ -1,4 +1,4 @@
-@extends('layouts.master_module')
+@extends('layouts.modulePage')
 @section('page.title')
 {{ ucwords($teacher->teacherInfo->name) }} | Teachers
 @endsection
@@ -45,7 +45,9 @@
                         </tbody>
                     </table>
                     <div class="text-right ">
-                        <a href="{{ URL::to('teacher/' . $teacher->id.'/edit') }}" class="btn btn-sm btn-primary">Edit profile</a>
+                        @role(['admin', 'teacher'])
+                            <a href="{{ URL::to('teacher/' . $teacher->id.'/edit') }}" class="btn btn-sm btn-primary">Edit profile</a>
+                        @endrole
                         <a href="{{ url()->previous() }}" class="btn btn-sm btn-primary">Back</a>
                     </div>
                 </div>
