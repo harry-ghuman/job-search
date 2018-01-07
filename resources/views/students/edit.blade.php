@@ -26,7 +26,7 @@
                         <span class="badge">1</span>&nbsp;
                         <label><h3><strong>Personal Information</strong></h3></label>
                     </div>
-                    {{ Form::model($student, array('route' => array('student.update', $student->id), 'method' => 'PUT', 'class' => "form-horizontal")) }}
+                    {{ Form::model($student, array('route' => array('students.update', $student->id), 'method' => 'PUT', 'class' => "form-horizontal")) }}
                         <div class="form-group">
                             {{ Form::label('name', 'Name',['class'=>'col-sm-2 control-label']) }}
                             <div class="col-sm-10">
@@ -99,7 +99,7 @@
 								</tr>
 								</thead>
 								<tbody>
-								@foreach ($student_education as $education)
+								@foreach ($student->education as $education)
 									<tr>
 										<td><input type="text" name="program[]" value="{{ ucwords($education->program) }}" class="form-control input-sm"></td>
 										<td><input type="text" name="university[]" value="{{ ucwords($education->university) }}" class="form-control input-sm"></td>
@@ -136,7 +136,7 @@
 								<th>End date</th>
 								</thead>
 								<tbody>
-								@foreach ($student_work_experience as $work)
+								@foreach ($student->workExperience as $work)
 									<tr>
 										<td><input type="text" name="job_title[]" value="{{ ucwords($work->job_title) }}" class="form-control input-sm"></td>
 										<td><input type="text" name="company[]" value="{{ ucwords($work->company) }}" class="form-control input-sm"></td>
@@ -164,7 +164,7 @@
                             <label><h3><strong>Skills</strong></h3></label>
                         </div>
                         <div class="input_fields_wrap">
-                            @foreach ($student_skills as $skill)
+                            @foreach ($student->skills as $skill)
                                 <input type="text"  required class="form-control input-sm" style="display:inline; width:90px" name="skill_name[]" value="{{ $skill->skill_name }}">
                                 <a href="javascript:void(0)" class="ibtnDel btn btn-xs btn-danger remove_field" style="margin-right: 18px;">
                                     <span class="glyphicon glyphicon-minus"></span>

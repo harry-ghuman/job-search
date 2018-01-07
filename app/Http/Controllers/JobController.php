@@ -61,7 +61,7 @@ class JobController extends Controller
             return redirect(route('job.viewPostedJobs', $teacher_id));
         }
         else{
-            return redirect('/job');
+            return redirect(route('jobs.index'));
         }
     }
 
@@ -131,7 +131,7 @@ class JobController extends Controller
             return redirect(route('job.viewPostedJobs', $teacher_id));
         }
         else{
-            return redirect('/job');
+            return redirect(route('jobs.index'));
         }
     }
 
@@ -154,7 +154,7 @@ class JobController extends Controller
             return redirect(route('job.viewPostedJobs', $teacher_id));
         }
         else{
-            return redirect('/job');
+            return redirect(route('jobs.index'));
         }
     }
 
@@ -190,6 +190,6 @@ class JobController extends Controller
 
         flash('Job application status has been updated successfully.')->success()->important();
 
-        return redirect('job/viewJobApplications/'.$job_id);
+        return redirect(route('jobs.viewJobApplications', $job_id));
     }
 }

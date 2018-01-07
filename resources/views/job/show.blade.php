@@ -46,11 +46,11 @@
                     </table>
                     <div class="text-right ">
                         @role(['admin', 'teacher'])
-                            <a href="{{ URL::to('job/' . $job->id.'/edit') }}" class="btn btn-sm btn-primary">Edit Job</a>
+                            <a href="{{ URL::to('jobs/' . $job->id.'/edit') }}" class="btn btn-sm btn-primary">Edit Job</a>
                         @endrole
                         @role('student')
                             @if(!isset($application_status))
-                                <a href="{{ URL::to('student/'.App\Student::where('user_id', Auth::user()->id)->value('id').'/applyJob/'.$job->id) }}" class="btn btn-sm btn-primary">Apply to Job</a>
+                                <a href="{{ URL::to('students/'.App\Student::where('user_id', Auth::user()->id)->value('id').'/applyJob/'.$job->id) }}" class="btn btn-sm btn-primary">Apply to Job</a>
                             @endif
                         @endrole
                         <a href="{{ url()->previous() }}" class="btn btn-sm btn-primary">Back</a>

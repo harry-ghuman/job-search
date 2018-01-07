@@ -46,7 +46,7 @@
                     </table>
                     <div class="text-right ">
                         @role(['admin', 'teacher'])
-                            <a href="{{ URL::to('teacher/' . $teacher->id.'/edit') }}" class="btn btn-sm btn-primary">Edit profile</a>
+                            <a href="{{ URL::to('teachers/' . $teacher->id.'/edit') }}" class="btn btn-sm btn-primary">Edit profile</a>
                         @endrole
                         <a href="{{ url()->previous() }}" class="btn btn-sm btn-primary">Back</a>
                     </div>

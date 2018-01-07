@@ -21,7 +21,7 @@
                             </ul>
                         </div>
                     @endif
-                    {{ Form::model($job, array('route' => array('job.update', $job->id), 'method' => 'PUT', 'class' => "form-horizontal")) }}
+                    {{ Form::model($job, array('route' => array('jobs.update', $job->id), 'method' => 'PUT', 'class' => "form-horizontal")) }}
                     <div class="form-group">
                         {{ Form::label('job_title', 'Job title',['class'=>'col-sm-2 control-label']) }}
                         <div class="col-sm-10">

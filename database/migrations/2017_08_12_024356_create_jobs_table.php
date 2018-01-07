@@ -24,6 +24,18 @@ class CreateJobsTable extends Migration
             $table->mediumText('requirements')->nullable();
             $table->timestamps();
         });
+
+        Schema::create('job_applications', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('job_id')->unsigned();
+            $table->foreign('job_id')->references('id')->on('jobs');
+            $table->integer('teacher_id')->unsigned();
+            $table->foreign('teacher_id')->references('id')->on('teachers');
+            $table->integer('student_id')->unsigned();
+            $table->foreign('student_id')->references('id')->on('students');
+            $table->string('status');
+            $table->timestamps();
+        });
     }
 
     /**
@@ -33,6 +45,17 @@ class CreateJobsTable extends Migration
      */
     public function down()
     {
+        Schema::table('job_applications', function (Blueprint $table) {
+            $table->dropForeign(['job_id']);
+        });
+        Schema::table('job_applications', function (Blueprint $table) {
+            $table->dropForeign(['teacher_id']);
+        });
+        Schema::table('job_applications', function (Blueprint $table) {
+            $table->dropForeign(['student_id']);
+        });
+        Schema::dropIfExists('job_applications');
+
         Schema::table('jobs', function (Blueprint $table) {
             $table->dropForeign(['teacher_id']);
         });

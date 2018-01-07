@@ -19,7 +19,7 @@
                             <br>
                             <br>
                             <div class="text-center">
-                                <a href="{{ URL::to('job/create') }}" class="btn btn-sm btn-primary">Create Job</a>
+                                <a href="{{ URL::to('jobs/create') }}" class="btn btn-sm btn-primary">Create Job</a>
                             </div>
                         @endrole
                     </div>
@@ -27,7 +27,7 @@
                     else { ?>
                         @role('teacher')
                             <div class="text-right">
-                                <a href="{{ URL::to('job/create') }}" class="btn btn-sm btn-primary">Create Job</a>
+                                <a href="{{ URL::to('jobs/create') }}" class="btn btn-sm btn-primary">Create Job</a>
                             </div>
                         @endrole
                         <div class="table-responsive">
@@ -49,19 +49,19 @@
 								@foreach ($jobs as $job)
 									<tr>
 										<td><?php echo $i; ?></td>
-										<td title="Click to view more information"><a href="{{ URL::to('job/' . $job->id) }}">{{ ucwords($job->job_title) }}</a></td>
+										<td title="Click to view more information"><a href="{{ route('jobs.show', $job->id) }}">{{ ucwords($job->job_title) }}</a></td>
 										<td>{{ ucwords($job->credits) }}</td>
 										@role(['admin', 'student'])
-											<td title="Click to view more information"><a href="{{ URL::to('teacher/' . $job->jobPostedBy->id) }}">{{ ucwords($job->jobPostedBy->teacherInfo->name) }}</a></td>
+											<td title="Click to view more information"><a href="{{ route('teachers.show', $job->jobPostedBy->id) }}">{{ ucwords($job->jobPostedBy->teacherInfo->name) }}</a></td>
 										@endrole
 										@role(['admin', 'teacher'])
 											<td>
-												<a href="{{ URL::to('job/viewJobApplications/' . $job->jobPostedBy->id) }}" class="btn btn-xs btn-warning">{{ $job->jobApplications->count() }} applicant<?php echo ($job->jobApplications->count()>1)? 's':''; ?></a>
+												<a href="{{ route('jobs.viewJobApplications', $job->jobPostedBy->id) }}" class="btn btn-xs btn-warning">{{ $job->jobApplications->count() }} applicant<?php echo ($job->jobApplications->count()>1)? 's':''; ?></a>
 											</td>
 											<td>
-												<a href="{{ URL::to('job/' . $job->id.'/edit') }}" class="btn btn-xs btn-primary">Edit</a>
+												<a href="{{ route('jobs.edit', $job->id) }}" class="btn btn-xs btn-primary">Edit</a>
 												<div style="display: inline-block;">
-													{{ Form::open(array('url' => 'job/' . $job->id,'onsubmit' => 'return confirm("Are you sure you want to delete '.$job->job_title.'?")')) }}
+													{{ Form::open(array('url' => route('jobs.destroy', $job->id),'onsubmit' => 'return confirm("Are you sure you want to delete '.$job->job_title.'?")')) }}
 													{{ Form::hidden('_method', 'DELETE') }}
 													{{ Form::submit('Delete', array('class' => 'btn btn-xs btn-primary')) }}
 													{{ Form::close() }}

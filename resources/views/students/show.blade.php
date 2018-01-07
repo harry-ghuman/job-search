@@ -62,7 +62,7 @@
                         <span class="badge">2</span>&nbsp;
                         <label><h3><strong>Education</strong></h3></label>
                     </div>
-                    @if (!count($student_education))
+                    @if (!count($student->education))
                         No education added!
                     @else
 						<div class="table-responsive">
@@ -77,7 +77,7 @@
 									</tr>
 								</thead>
 								<tbody>
-									@foreach ($student_education as $education)
+									@foreach ($student->education as $education)
 										<tr>
 											<td>{{ ucwords($education->program) }}</td>
 											<td>{{ ucwords($education->university) }}</td>
@@ -94,7 +94,7 @@
                         <span class="badge">3</span>&nbsp;
                         <label><h3><strong>Work experience</strong></h3></label>
                     </div>
-                    @if (!count($student_work_experience))
+                    @if (!count($student->workExperience))
                         No work experience added!
                     @else
 						<div class="table-responsive">
@@ -107,7 +107,7 @@
 									<th>End date</th>
 								</thead>
 								<tbody>
-									@foreach ($student_work_experience as $work)
+									@foreach ($student->workExperience as $work)
 										<tr>
 											<td>{{ ucwords($work->job_title) }}</td>
 											<td>{{ ucwords($work->company) }}</td>
@@ -125,7 +125,7 @@
                         <label><h3><strong>Skills</strong></h3></label>
                     </div>
                     <div>
-                        @forelse ($student_skills as $skill)
+                        @forelse ($student->skills as $skill)
                             <span class="label label-default">{{ strtoupper($skill->skill_name) }}</span>
                             @empty
                                 No skill added!
@@ -134,7 +134,7 @@
                     <br>
                     <div class="text-right ">
                         @permission('edit-student')
-                            <a href="{{ URL::to('student/' . $student->id.'/edit') }}" class="btn btn-sm btn-primary">Edit profile</a>
+                            <a href="{{ URL::to('students/' . $student->id.'/edit') }}" class="btn btn-sm btn-primary">Edit profile</a>
                         @endpermission
                         <a href="{{ url()->previous() }}" class="btn btn-sm btn-primary">Back</a>
                     </div>

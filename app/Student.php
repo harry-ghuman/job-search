@@ -8,30 +8,43 @@ class Student extends Model
 {
     public $timestamps = false;
 
-    protected $fillable = [
-        'user_id'
-    ];
+    protected $fillable = ['student_id', 'semester', 'year', 'phone', 'residency_status', 'country', 'gender'];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
     public function studentInfo()
     {
         return $this->hasOne(User::class, 'id', 'user_id');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function education()
     {
         return $this->hasMany(StudentEducation::class,'user_id','user_id');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function workExperience()
     {
         return $this->hasMany(StudentWorkExperience::class,'user_id','user_id');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function skills()
     {
         return $this->hasMany(StudentSkill::class,'user_id','user_id');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
     public function jobApplication()
     {
         return $this->hasOne(JobApplication::class, 'student_id', 'id');

@@ -4,9 +4,9 @@
     <li><a href="{{ route('dashboard') }}">Home</a></li>
 @endif
 @role('admin')
-    <li><a href="{{ route('teacher.index') }}">Teachers</a></li>
-    <li><a href="{{ route('student.index') }}">Students</a></li>
-    <li><a href="{{ route('job.index') }}">Jobs</a></li>
+    <li><a href="{{ route('teachers.index') }}">Teachers</a></li>
+    <li><a href="{{ route('students.index') }}">Students</a></li>
+    <li><a href="{{ route('jobs.index') }}">Jobs</a></li>
 @endrole
 @role('teacher')
     <li class="dropdown">
@@ -14,13 +14,13 @@
             Jobs<span class="caret"></span>
         </a>
         <ul class="dropdown-menu" role="menu">
-            <li><a href="{{ route('job.create') }}">Create Job</a></li>
-            <li><a href="{{ route('job.viewPostedJobs', App\Teacher::where('user_id', Auth::user()->id)->value('id')) }}">View Jobs Posted</a></li>
+            <li><a href="{{ route('jobs.create') }}">Create Job</a></li>
+            <li><a href="{{ route('jobs.viewPostedJobs', App\Teacher::where('user_id', Auth::user()->id)->value('id')) }}">View Jobs Posted</a></li>
         </ul>
     </li>
 @endrole
 @role('student')
-    <li><a href="{{ route('job.index') }}">Jobs</a></li>
+    <li><a href="{{ route('jobs.index') }}">Jobs</a></li>
 @endrole
 @if (Auth::guest())
     <li><a href="{{ route('login') }}">Login</a></li>
@@ -32,13 +32,13 @@
 
         <ul class="dropdown-menu" role="menu">
             @role('admin')
-                <li><a href="{{ route('admin.show', 1) }}">My profile</a></li>
+                <li><a href="{{ route('admins.show', 1) }}">My profile</a></li>
             @endrole
             @role('teacher')
-                <li><a href="{{ route('teacher.show', App\Teacher::where('user_id', Auth::user()->id)->value('id')) }}">My profile</a></li>
+                <li><a href="{{ route('teachers.show', App\Teacher::where('user_id', Auth::user()->id)->value('id')) }}">My profile</a></li>
             @endrole
             @role('student')
-                <li><a href="{{ route('student.show', App\Student::where('user_id', Auth::user()->id)->value('id')) }}">My profile</a></li>
+                <li><a href="{{ route('students.show', App\Student::where('user_id', Auth::user()->id)->value('id')) }}">My profile</a></li>
             @endrole
             <li><a href="{{ route('user.resetpassword') }}">Reset Password</a></li>
             <li>
