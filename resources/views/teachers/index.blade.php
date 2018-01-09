@@ -32,13 +32,13 @@
 									@foreach ($teachers as $teacher)
 										<tr>
 											<td><?php echo $i; ?></td>
-											<td title="Click to view more information"><a href="{{ URL::to('teacher/' . $teacher->id) }}">{{ ucwords($teacher->teacherInfo->name) }}</a></td>
+											<td title="Click to view more information"><a href="{{ route('teachers.show', $teacher->id) }}">{{ ucwords($teacher->teacherInfo->name) }}</a></td>
 											<td>{{ ucwords($teacher->job_title) }}</td>
 											<td>{{ ucwords($teacher->department) }}</td>
 											<td>
-												<a href="{{ URL::to('teacher/' . $teacher->id.'/edit') }}" class="btn btn-xs btn-primary">Edit</a>
+												<a href="{{ route('teachers.edit', $teacher->id) }}" class="btn btn-xs btn-primary">Edit</a>
 												<div style="display: inline-block;">
-												{{ Form::open(array('url' => 'teacher/' . $teacher->id,'onsubmit' => 'return confirm("Are you sure you want to delete '.$teacher->teacherInfo->name.'? \nPlease note that all the jobs posted by '.$teacher->teacherInfo->name.' will also be deleted.")')) }}
+												{{ Form::open(array('url' => route('teachers.destroy', $teacher->id),'onsubmit' => 'return confirm("Are you sure you want to delete '.$teacher->teacherInfo->name.'? \nPlease note that all the jobs posted by '.$teacher->teacherInfo->name.' will also be deleted.")')) }}
 													{{ Form::hidden('_method', 'DELETE') }}
 													{{ Form::submit('Delete', array('class' => 'btn btn-xs btn-primary')) }}
 												{{ Form::close() }}

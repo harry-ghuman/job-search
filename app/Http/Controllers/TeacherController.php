@@ -4,11 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateTeacherRequest;
 use App\Teacher;
-use App\User;
-use App\Job;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\View;
-use Illuminate\Support\Facades\Input;
 
 class TeacherController extends Controller
 {
@@ -21,67 +16,58 @@ class TeacherController extends Controller
     {
         $this->authorize('index', Teacher::class);
 
-        $teachers = Teacher::all()->sortBy('id');
+        $teachers = Teacher::select('teachers.*')
+            ->join('users', 'teachers.user_id', '=', 'users.id')
+            ->orderBy('users.name')
+            ->get();
 
-        return View::make('teacher.index')->with('teachers', $teachers);
+        return view('teachers.index', compact('teachers'));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Teacher  $teacher
+     * @param Teacher $teacher
      * @return \Illuminate\Http\Response
      */
     public function show(Teacher $teacher)
     {
-        $teacher = Teacher::findOrFail($teacher->id);
-
         $this->authorize('show', $teacher);
 
-        return View::make('teacher.show')->with('teacher', $teacher);
+        return view('teachers.show', compact('teacher'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Teacher  $teacher
+     * @param Teacher $teacher
      * @return \Illuminate\Http\Response
      */
     public function edit(Teacher $teacher)
     {
-        $teacher = Teacher::findOrFail($teacher)->first();
-
         $this->authorize('edit', $teacher);
 
-        return View::make('teacher.edit')->with('teacher', $teacher);
+        return view('teachers.edit', compact('teacher'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Teacher  $teacher
+     * @param UpdateTeacherRequest $request
+     * @param Teacher $teacher
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateTeacherRequest $request, Teacher $teacher)
     {
         $this->authorize('update', $teacher);
 
-        $teacher_name                   = User::find($teacher->user_id);
-        $teacher_name->name             = Input::get('name');
-        $teacher_name->save();
-
-        $teacher                        = Teacher::find($teacher)->first();
-        $teacher->job_title             = Input::get('job_title');
-        $teacher->special_designation   = Input::get('special_designation');
-        $teacher->department            = Input::get('department');
-        $teacher->phone                 = Input::get('phone');
-        $teacher->office_address        = Input::get('office_address');
+        $teacher->fill($request->only($teacher->getFillable()));
+        $teacher->teacherInfo()->update(['name'=>$request->get('name')]);
         $teacher->save();
 
         flash('Teacher information has been updated successfully.')->success()->important();
 
-        return redirect('/teacher');
+        return redirect(route('teachers.show', $teacher->id));
     }
 
     /**
@@ -94,12 +80,11 @@ class TeacherController extends Controller
     {
         $this->authorize('destroy', $teacher);
 
-        Job::where('teacher_id','=', $teacher->id)->delete();
-        Teacher::find($teacher)->first()->delete();
-        User::find($teacher->user_id)->delete();
+        $teacher->postedJobs()->delete();
+        $teacher->teacherInfo()->delete(); // Soft deleted
 
         flash('Teacher information has been deleted successfully.')->success()->important();
 
-        return redirect('/teacher');
+        return redirect(route('teachers.index'));
     }
 }

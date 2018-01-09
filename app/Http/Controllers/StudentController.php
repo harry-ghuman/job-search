@@ -10,11 +10,6 @@ use App\StudentWorkExperience;
 use App\StudentSkill;
 use App\User;
 use App\Job;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\View;
-use Illuminate\Support\Facades\Input;
-use App\Http\Controllers\Auth;
 
 class StudentController extends Controller
 {
@@ -27,9 +22,12 @@ class StudentController extends Controller
     {
         $this->authorize('index', Student::class);
 
-        $students = Student::all()->sortBy('id');
+        $students = Student::select('students.*')
+            ->join('users', 'students.user_id', '=', 'users.id')
+            ->orderBy('users.name')
+            ->get();
 
-        return View::make('student.index')->with('students', $students);
+        return view('students.index', compact('students'));
     }
 
     /**
@@ -40,15 +38,9 @@ class StudentController extends Controller
      */
     public function show(Student $student)
     {
-        $student = Student::findOrFail($student->id);
-
         $this->authorize('show', $student);
 
-        $student_education = $student->education;
-        $student_work_experience = $student->workExperience;
-        $student_skills = $student->skills;
-
-        return view('student.show', compact('student','student_education','student_work_experience', 'student_skills'));
+        return view('students.show', compact('student'));
     }
 
     /**
@@ -59,44 +51,24 @@ class StudentController extends Controller
      */
     public function edit(Student $student)
     {
-        $student = Student::findOrFail($student)->first();
-        $user    = User::find($student->user_id);
+        $this->authorize('edit', $student);
 
-
-        $this->authorize('edit', [$student, $user]);
-
-        $student_education = $student->education;
-        $student_work_experience = $student->workExperience;
-        $student_skills = $student->skills;
-
-        return view('student.edit', compact('student','student_education','student_work_experience', 'student_skills'));
+        return view('students.edit', compact('student'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Student  $student
-     * @return \Illuminate\Http\Response
+     * @param UpdateStudentRequest $request
+     * @param Student $student
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-//    public function update(UpdateStudentRequest $request, Student $student)
     public function update(UpdateStudentRequest $request, Student $student)
     {
-        $student_name               = User::find($student->user_id);
+        $this->authorize('update', $student);
 
-        $this->authorize('update', [$student, $student_name]);
-
-        $student_name->name         = Input::get('name');
-        $student_name->save();
-
-        $student                    = Student::find($student)->first();
-        $student->student_id        = Input::get('student_id');
-        $student->semester          = Input::get('semester');
-        $student->year              = Input::get('student_year');
-        $student->phone             = Input::get('phone');
-        $student->residency_status  = Input::get('residency_status');
-        $student->country           = Input::get('student_country');
-        $student->gender            = Input::get('gender');
+        $student->fill($request->only($student->getFillable()));
+        $student->teacherInfo()->update(['name'=>$request->get('name')]);
         $student->save();
 
         $input = $request->all();
@@ -141,7 +113,7 @@ class StudentController extends Controller
 
         flash('Student information has been updated successfully.')->success()->important();
 
-        return redirect('/student/'.$student->id);
+        return redirect(route('students.show'.$student->id));
     }
 
     /**
