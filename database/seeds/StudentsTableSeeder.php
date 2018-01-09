@@ -31,7 +31,7 @@ class StudentsTableSeeder extends Seeder
             ->get();
 
         foreach ($users as $user) {
-            Student::create([
+            $student = Student::create([
                 'user_id'           => $user->user_id,
                 'student_id'        => '1045097'.$faker->unique()->numberBetween(10,99),
                 'semester'          => $faker->randomElement(['Fall', 'Winter', 'Summer']),
@@ -41,25 +41,25 @@ class StudentsTableSeeder extends Seeder
                 'residency_status'  => $faker->randomElement(['International Student', 'Citizen/Permanent Resident']),
                 'country'           => $faker->country,
             ]);
-            StudentEducation::create([
-                'user_id'       => $user->user_id,
+
+            $student->education()->create([
                 'program'       => $faker->randomElement($programs),
                 'university'    => $faker->randomElement($universities),
                 'gpa'           => $faker->randomFloat(1,1,4),
                 'year'          => $faker->numberBetween(2010,2015),
                 'country'       => 'Canada',
             ]);
-            StudentWorkExperience::create([
-                'user_id'       => $user->user_id,
+
+            $student->workExperience()->create([
                 'job_title'     => $faker->jobTitle,
                 'company'       => $faker->company,
                 'duties'        => $faker->text(50),
                 'start_date'    => $faker->date(),
                 'end_date'      => $faker->date(),
             ]);
+
             for($i=1;$i<=5;$i++){
-                StudentSkill::create([
-                    'user_id'       => $user->user_id,
+                $student->skills()->create([
                     'skill_name'    => $faker->word,
                 ]);
             }

@@ -32,7 +32,8 @@
 								@foreach ($students as $student)
 									<tr>
 										<td><?php echo $i; ?></td>
-										<td title="Click to view  information"><a href="{{ URL::to('students/' . $student->id) }}">{{ ucwords($student->studentInfo->name) }}</a></td>
+										<td><?php echo $i; ?></td>
+										{{--<td title="Click to view  information"><a href="{{ URL::to('students/' . $student->id) }}">{{ ucwords($student->studentInfo->name) }}</a></td>--}}
 										<td>{{ ucwords($student->student_id) }}</td>
 										<td>{{ ucwords($student->semester).' '.$student->year }}</td>
 										@role(['admin', 'student'])

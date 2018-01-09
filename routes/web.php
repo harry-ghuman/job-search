@@ -11,11 +11,9 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('/');
-
 Auth::routes();
+
+Route::get('/', 'Auth\LoginController@showLoginForm');
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('dashboard', 'HomeController@index')->name('dashboard');

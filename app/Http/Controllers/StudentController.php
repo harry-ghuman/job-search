@@ -10,7 +10,6 @@ use App\StudentWorkExperience;
 use App\StudentSkill;
 use App\User;
 use App\Job;
-use Illuminate\Support\Facades\Input;
 
 class StudentController extends Controller
 {

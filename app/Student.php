@@ -15,7 +15,7 @@ class Student extends Model
      */
     public function studentInfo()
     {
-        return $this->hasOne(User::class, 'id', 'user_id');
+        return $this->hasOne(User::class);
     }
 
     /**
@@ -23,7 +23,7 @@ class Student extends Model
      */
     public function education()
     {
-        return $this->hasMany(StudentEducation::class,'user_id','user_id');
+        return $this->hasMany(StudentEducation::class);
     }
 
     /**
@@ -31,7 +31,7 @@ class Student extends Model
      */
     public function workExperience()
     {
-        return $this->hasMany(StudentWorkExperience::class,'user_id','user_id');
+        return $this->hasMany(StudentWorkExperience::class);
     }
 
     /**
@@ -39,7 +39,7 @@ class Student extends Model
      */
     public function skills()
     {
-        return $this->hasMany(StudentSkill::class,'user_id','user_id');
+        return $this->hasMany(StudentSkill::class);
     }
 
     /**
@@ -47,7 +47,7 @@ class Student extends Model
      */
     public function jobApplication()
     {
-        return $this->hasOne(JobApplication::class, 'student_id', 'id');
+        return $this->hasOne(JobApplication::class);
     }
 
 }
