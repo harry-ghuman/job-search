@@ -10,7 +10,7 @@
                         Quick Links
                     </div>
                     <ul>
-                        @include('partials.navigation', ['footer_navigation' => true])
+                        @include('layouts.partials.navigation', ['footer_navigation' => true])
                     </ul>
                 </div>
             </div>

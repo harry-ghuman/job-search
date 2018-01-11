@@ -1,57 +1,46 @@
 @extends('layouts.modulePage')
+
 @section('page.title')
-{{ ucwords($teacher->teacherInfo->name) }} | Teachers
+    {{ ucwords($teacher->user->name) }} | Teachers
 @endsection
-@section('page.body')
-<div class="title" id="title">
-    <div class="container">
-        Teacher information
-    </div>
-</div>
-<div class="page-content">
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-6 col-sm-offset-3">
-                <table class="table table-condensed table-bordered table-hover">
-                    <tbody>
-                        <tr>
-                            <th>Name</th>
-                            <td>{{ ucwords($teacher->teacherInfo->name) }}</td>
-                            </tr>
-                            <tr>
-                                <th>Job title</th>
-                                <td>{{ ucwords($teacher->job_title) }}</td>
-                            </tr>
-                            <tr>
-                                <th>Special Designation</th>
-                                <td>{{ ucwords($teacher->special_designation) }}</td>
-                            </tr>
-                            <tr>
-                                <th>Department</th>
-                                <td>{{ ucwords($teacher->department) }}</td>
-                            </tr>
-                            <tr>
-                                <th>Email</th>
-                                <td><a href="mailto:{{ $teacher->teacherInfo->email }}">{{ $teacher->teacherInfo->email }}</a></td>
-                            </tr>
-                            <tr>
-                                <th>Phone</th>
-                                <td>{{ $teacher->phone }}</td>
-                            </tr>
-                            <tr>
-                                <th>Office Address</th>
-                                <td>{{ ucwords($teacher->office_address) }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div class="text-right ">
-                        @role(['admin', 'teacher'])
-                            <a href="{{ URL::to('teachers/' . $teacher->id.'/edit') }}" class="btn btn-sm btn-primary">Edit profile</a>
-                        @endrole
-                        <a href="{{ url()->previous() }}" class="btn btn-sm btn-primary">Back</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+
+@section('page.body.title', 'Teacher information')
+@section('page.body.content')
+    <table class="table table-condensed table-bordered table-hover">
+        <tbody>
+            <tr>
+                <th>Name</th>
+                <td>{{ ucwords($teacher->user->name) }}</td>
+            </tr>
+            <tr>
+                <th>Job title</th>
+                <td>{{ ucwords($teacher->job_title) }}</td>
+            </tr>
+            <tr>
+                <th>Special Designation</th>
+                <td>{{ ucwords($teacher->special_designation) }}</td>
+            </tr>
+            <tr>
+                <th>Department</th>
+                <td>{{ ucwords($teacher->department) }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td><a href="mailto:{{ $teacher->user->email }}">{{ $teacher->user->email }}</a></td>
+            </tr>
+            <tr>
+                <th>Phone</th>
+                <td>{{ $teacher->phone }}</td>
+            </tr>
+            <tr>
+                <th>Office Address</th>
+                <td>{{ ucwords($teacher->office_address) }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="text-right ">
+        @role(['admin', 'teacher'])
+            <a href="{{ route('teachers.edit', $teacher->id) }}" class="btn btn-sm btn-primary">Edit profile</a>
+        @endrole
     </div>
 @endsection

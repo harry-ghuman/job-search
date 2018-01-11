@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateTeacherRequest;
 use App\Teacher;
+use App\User;
 
 class TeacherController extends Controller
 {
@@ -16,22 +17,23 @@ class TeacherController extends Controller
     {
         $this->authorize('index', Teacher::class);
 
-        $teachers = Teacher::select('teachers.*')
-            ->join('users', 'teachers.user_id', '=', 'users.id')
-            ->orderBy('users.name')
-            ->get();
+        // This makes sorting by 'name' column easier. Its more work from 'Teacher' model.
+        $users = User::all()->sortBy('name')->filter(function ($user) {
+            return $user->teacher;
+        });
 
-        return view('teachers.index', compact('teachers'));
+        return view('teachers.index', compact('users'));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param Teacher $teacher
+     * @param $teacherId
      * @return \Illuminate\Http\Response
      */
-    public function show(Teacher $teacher)
+    public function show($teacherId)
     {
+        $teacher = Teacher::findOrFail($teacherId);
         $this->authorize('show', $teacher);
 
         return view('teachers.show', compact('teacher'));
@@ -40,11 +42,12 @@ class TeacherController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param Teacher $teacher
+     * @param $teacherId
      * @return \Illuminate\Http\Response
      */
-    public function edit(Teacher $teacher)
+    public function edit($teacherId)
     {
+        $teacher = Teacher::findOrFail($teacherId);
         $this->authorize('edit', $teacher);
 
         return view('teachers.edit', compact('teacher'));
@@ -62,7 +65,7 @@ class TeacherController extends Controller
         $this->authorize('update', $teacher);
 
         $teacher->fill($request->only($teacher->getFillable()));
-        $teacher->teacherInfo()->update(['name'=>$request->get('name')]);
+        $teacher->user()->update(['name'=>$request->get('name')]);
         $teacher->save();
 
         flash('Teacher information has been updated successfully.')->success()->important();
@@ -73,15 +76,18 @@ class TeacherController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Teacher  $teacher
+     * Todo: Update front end to use Bootstrap Dialog and test this method
+     *
+     * @param $teacherId
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Teacher $teacher)
+    public function destroy($teacherId)
     {
+        $teacher = Teacher::findOrFail($teacherId);
         $this->authorize('destroy', $teacher);
 
         $teacher->postedJobs()->delete();
-        $teacher->teacherInfo()->delete(); // Soft deleted
+        $teacher->user()->delete(); // Soft deleted
 
         flash('Teacher information has been deleted successfully.')->success()->important();
 

@@ -9,6 +9,9 @@
     <link rel="icon" type="image/ico" href="{{asset('img/favicon.ico')}}" />
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
     <script src="{{ asset('js/app.js') }}"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.3/js/all.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.7/css/bootstrap-dialog.min.css"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.7/js/bootstrap-dialog.min.js"></script>
 </head>
 <body>
     @yield('page.main')

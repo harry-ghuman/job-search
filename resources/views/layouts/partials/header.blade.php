@@ -30,7 +30,7 @@
             </div>
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    @include('partials.navigation')
+                    @include('layouts.partials.navigation')
                 </ul>
             </div>
 

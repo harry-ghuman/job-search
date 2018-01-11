@@ -68,7 +68,7 @@ class StudentController extends Controller
         $this->authorize('update', $student);
 
         $student->fill($request->only($student->getFillable()));
-        $student->teacherInfo()->update(['name'=>$request->get('name')]);
+        $student->user()->update(['name'=>$request->get('name')]);
         $student->save();
 
         $input = $request->all();

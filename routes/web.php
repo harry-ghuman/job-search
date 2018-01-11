@@ -25,6 +25,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('jobs', 'JobController');
     Route::get('job/viewPostedJobs/{id}', ['as'=>'job.viewPostedJobs','uses'=>'JobController@jobsPostedByTeacher']);
     Route::get('jobs/{id}/viewJobApplications', ['as'=>'jobs.viewJobApplications','uses'=>'JobController@viewJobApplications']);
-    Route::get('resetPassword', function() {return view('partials.resetPassword'); })->name('user.resetpassword');
+    Route::get('resetPassword', function() {return view('layouts.partials.resetPassword'); })->name('user.resetpassword');
     Route::post('resetPassword', 'Auth\ResetPasswordController@userResetPasswordUpdate')->name('user.resetpassword');
 });

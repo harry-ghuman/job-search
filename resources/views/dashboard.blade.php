@@ -1,15 +1,13 @@
 @extends('layouts.modulePage')
+
 @section('page.title')
     Dashboard
 @endsection
-@section('page.body')
-    <div class="title">
-        <div class="container">
-            Welcome to
-            @role('admin')Admin @endrole
-            @role('teacher')Teacher @endrole
-            @role('student')Student @endrole
-            Portal
-        </div>
-    </div>
+
+@section('page.body.title')
+    Welcome to
+    @role('admin')Admin @endrole
+    @role('teacher')Teacher @endrole
+    @role('student')Student @endrole
+    Portal
 @endsection

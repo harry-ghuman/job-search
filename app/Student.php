@@ -15,7 +15,7 @@ class Student extends Model
      */
     public function studentInfo()
     {
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class);
     }
 
     /**
